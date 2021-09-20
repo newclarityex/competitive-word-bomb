@@ -60,9 +60,9 @@ function createRooms(matches, rooms, queue) {
                 private: true,
                 id: roomId
             }
-            rooms.push(Match(match, matchOptions))
-            sendClient(match[0].client, "console", "Game Started")
-            sendClient(match[1].client, "console", "Game Started")
+            rooms.push(new Match(match, matchOptions))
+            sendClient(match[0].client, "console", "Game Started, " + matchOptions.id)
+            sendClient(match[1].client, "console", "Game Started" + matchOptions.id)
             removeQueue(queue, match[0].client)
             removeQueue(queue, match[1].client)
         }

@@ -4,5 +4,8 @@ const clientFunctions = {
     },
     matchFound: (payload) => {
         console.log("Match Found!");
+    },
+    startGame: (payload) => {
+        
     }
 }

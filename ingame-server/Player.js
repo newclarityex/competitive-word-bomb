@@ -17,7 +17,7 @@ class Player {
         match.sendToAll("lifeLost", {identity:this.identity})
         match.nextRound();
     }
-    turnStart(match) {
+    startTurn(match) {
         this.countdownInterval = setInterval(() => {
             this.remainingTime--;
             if (remainingTime == 0) {
@@ -25,10 +25,10 @@ class Player {
             }
         }, 1000);
     }
-    turnEnd(addedTime, bonusMultiplier) {
+    endTurn(addedTime, bonusMultiplier) {
         clearInterval(this.countdownInterval)
         this.remainingTime += addedTime * bonusMultiplier
-        match.sendToAll("turnEnd", {identity:this.identity, addedTime, bonusMultiplier})
+        match.sendToAll("endTurn", {identity:this.identity, addedTime, bonusMultiplier})
         match.nextRound();
     }
 }

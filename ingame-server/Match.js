@@ -43,11 +43,12 @@ class Match {
         } else {
             this.options = defaultOptions
         }
-        this.players = players.map(player => Player(player.client, player.data, this.options))
+        this.players = players.map(player => new Player(player.client, player.data, this.options))
         this.round = 0
         this.combo = 0
         this.currentPlayer = 0
-        if (gametype=="ranked") {
+        this.id = this.options.id
+        if (this.options.gametype=="ranked") {
             this.startGame()
         }
     }
@@ -112,7 +113,7 @@ class Match {
             return
         }
         var addedTimes = this.calculateTime()
-        turnEnd(...addedTimes)
+        player.endTurn(...addedTimes)
     }
 }
 

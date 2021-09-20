@@ -17,5 +17,9 @@ module.exports = {
     },
     queueList(queue) {
         return JSON.stringify(queue.map((player)=>player.data.identity))
+    },
+    // future security
+    validatePlayer(validater) {
+        return 
     }
 }
