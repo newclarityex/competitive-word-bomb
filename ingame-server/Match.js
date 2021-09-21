@@ -17,13 +17,13 @@ const defaultOptions = {
     lengthBonusMax: 2,
 };
 
-var sqlite = require("better-sqlite3");
-var wordListDb = new sqlite("./word_list.db");
+const sqlite = require("better-sqlite3");
+const wordListDb = new sqlite("./word_list.db");
 
 function getSubstring(frequency) {
     let sql =
         "SELECT * FROM substrings WHERE frequency>? ORDER BY RANDOM() LIMIT 1";
-    var row = wordListDb.prepare(sql).get(frequency);
+    let row = wordListDb.prepare(sql).get(frequency);
     return row.substring;
 }
 
@@ -32,7 +32,7 @@ function checkWord(usedWords, word, substring) {
         return { status: false, error: "Word already used." };
     }
     let sql = "SELECT * FROM words WHERE word=?";
-    var row = wordListDb.prepare(sql).get(word);
+    let row = wordListDb.prepare(sql).get(word);
     if (row && word.includes(substring)) {
         return { status: true };
     } else {
@@ -94,7 +94,7 @@ class Match {
 
         this.round++;
 
-        var frequency = this.options.maxWordFrequency;
+        let frequency = this.options.maxWordFrequency;
         if (this.combo > this.options.freqMarginStart) {
             frequency = Math.max(
                 this.options.maxWordFrequency -
@@ -109,7 +109,7 @@ class Match {
         console.log(frequency);
         this.substring = getSubstring(frequency);
 
-        var player = this.players[this.currentPlayer];
+        let player = this.players[this.currentPlayer];
         this.sendAll("startTurn", {
             player: player.identity,
             substring: this.substring,
@@ -125,11 +125,11 @@ class Match {
         }, 3000);
     }
     calculateTime(word) {
-        var bonusMultiplier = 1;
+        let bonusMultiplier = 1;
         if (word.length > this.options.lengthBonusStart) {
-            var lengthRange =
+            let lengthRange =
                 this.options.lengthBonusEnd - this.options.lengthBonusStart;
-            var bonusRange =
+            let bonusRange =
                 this.options.lengthBonusMax - this.options.lengthBonusMin;
             bonusMultiplier =
                 Math.min(
@@ -139,7 +139,7 @@ class Match {
                     bonusRange
                 ) + bonusRange;
         }
-        var modifiedAddedTime = this.options.maxTime;
+        let modifiedAddedTime = this.options.maxTime;
         if (this.combo > this.options.timeMarginStart) {
             modifiedAddedTime = Math.max(
                 this.options.maxTime -
@@ -152,16 +152,16 @@ class Match {
     }
     submitWord(identity, word, substring) {
         word = word.toLowerCase();
-        var player = this.players[this.currentPlayer];
+        let player = this.players[this.currentPlayer];
         if (identity != player.identity) {
             return;
         }
-        var check = checkWord(word, substring);
+        let check = checkWord(word, substring);
         if (!check.status) {
             this.sendAll("failedSubmit", { identity, reason: check.error });
             return;
         }
-        var addedTimes = this.calculateTime(word);
+        let addedTimes = this.calculateTime(word);
         this.combo++;
         this.usedWords.push(word);
         player.endTurn(this, ...addedTimes);

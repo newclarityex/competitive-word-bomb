@@ -18,7 +18,7 @@ function uuidv4() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
         /[xy]/g,
         function (c) {
-            var r = (Math.random() * 16) | 0,
+            let r = (Math.random() * 16) | 0,
                 v = c == "x" ? r : (r & 0x3) | 0x8;
             return v.toString(16);
         }
@@ -26,7 +26,7 @@ function uuidv4() {
 }
 
 function getOrCreatePlayer(identity) {
-    var player = players.find((tempid) => tempid == identity);
+    let player = players.find((tempid) => tempid == identity);
     if (!player) {
         player = {
             identity,
@@ -58,7 +58,7 @@ function checkTurn(client, room) {
 
 module.exports = {
     joinQueue(client, payload) {
-        var player = getOrCreatePlayer(payload.identity);
+        let player = getOrCreatePlayer(payload.identity);
         if (
             queue.find(
                 (player) =>
@@ -78,12 +78,12 @@ module.exports = {
         sendClient(client, "console", "Joined queue." + queueList(queue));
     },
     leaveQueue(client) {
-        var player = removeQueue(queue, client);
+        let player = removeQueue(queue, client);
         setStatus(player, "online");
         sendClient(client, "console", "Leave queue." + queueList(queue));
     },
     editWord(client, payload) {
-        var room = getRoom(payload.roomId);
+        let room = getRoom(payload.roomId);
         if (!checkTurn(client, room)) {
             sendClient(client, "console", "Unable to edit word.");
             return;
@@ -91,8 +91,8 @@ module.exports = {
         room.sendAll("editWord", { word: payload.word });
     },
     submitWord(client, payload) {
-        var room = getRoom(payload.roomId);
-        var check = checkTurn(client, room);
+        let room = getRoom(payload.roomId);
+        let check = checkTurn(client, room);
         if (!check.status) {
             sendClient(
                 client,
@@ -104,11 +104,11 @@ module.exports = {
         room.submitWord(payload.identity, payload.word, room.substring);
     },
     connect(client, payload) {
-        var player = getOrCreatePlayer(payload.identity);
+        let player = getOrCreatePlayer(payload.identity);
         setStatus(player, "online");
     },
     disconnect(client) {
-        var player = removeQueue(queue, client);
+        let player = removeQueue(queue, client);
         // setStatus(player, "offline");
     },
 };

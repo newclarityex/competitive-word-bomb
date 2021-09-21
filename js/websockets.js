@@ -6,7 +6,7 @@ function sendServer(type, payload) {
 }
 
 socket.addEventListener("message", function (event) {
-    var data = JSON.parse(event.data);
+    let data = JSON.parse(event.data);
     console.log(event.data);
     clientFunctions[data.type](data.payload);
 });

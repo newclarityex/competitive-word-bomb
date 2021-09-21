@@ -10,10 +10,10 @@ class Match {
         }
         clearInterval(this.countdown);
         document.getElementById("timer").textContent = time + " seconds.";
-        var startTime = new Date().getTime();
-        var this_ = this;
+        let startTime = new Date().getTime();
+        let this_ = this;
         this.countdown = setInterval(() => {
-            var curTime =
+            let curTime =
                 time - parseInt((new Date().getTime() - startTime) / 1000);
             document.getElementById("timer").textContent =
                 Math.max(curTime, 0) + " seconds.";

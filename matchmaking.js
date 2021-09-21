@@ -11,9 +11,9 @@ function generateUniquePairs(arr) {
     if (arr.length < 2) {
         return [];
     }
-    var first = arr[0];
-    var rest = arr.slice(1);
-    var pairs = rest.map((val) => [first, val]);
+    let first = arr[0];
+    let rest = arr.slice(1);
+    let pairs = rest.map((val) => [first, val]);
     return pairs.concat(generateUniquePairs(rest));
 }
 
@@ -21,9 +21,9 @@ function validateMatch(pair, matchedPlayers) {
     if (pair[0] in matchedPlayers || pair[1] in matchedPlayers) {
         return false;
     }
-    var lowestTime = Math.max(pair[0].joinTime, pair[1].joinTime);
-    var timeInQueue = (new Date().getTime() - lowestTime) / 1000;
-    var ratingDifference = Math.abs(pair[0].data.rating - pair[1].data.rating);
+    let lowestTime = Math.max(pair[0].joinTime, pair[1].joinTime);
+    let timeInQueue = (new Date().getTime() - lowestTime) / 1000;
+    let ratingDifference = Math.abs(pair[0].data.rating - pair[1].data.rating);
     if (ratingDifference > thresholdPerSecond * timeInQueue) {
         return false;
     }
@@ -31,8 +31,8 @@ function validateMatch(pair, matchedPlayers) {
 }
 
 function generateMatches(pairs) {
-    var generatedMatches = [];
-    var matchedPlayers = [];
+    let generatedMatches = [];
+    let matchedPlayers = [];
     for (let i = 0; i < pairs.length; i++) {
         const pair = pairs[i];
         if (!validateMatch(pair, matchedPlayers)) {
@@ -45,8 +45,8 @@ function generateMatches(pairs) {
 }
 
 function generateRoomId() {
-    var result = "";
-    for (var i = 6; i > 0; --i)
+    let result = "";
+    for (let i = 6; i > 0; --i)
         result += Math.floor(Math.random() * 36).toString(36);
     return result.toUpperCase();
 }
@@ -57,7 +57,7 @@ function createRooms(matches, rooms, queue) {
         for (let i = 0; i < matches.length; i++) {
             const match = matches[i];
             const roomId = generateRoomId();
-            var matchOptions = {
+            let matchOptions = {
                 gametype: "ranked",
                 private: true,
                 id: roomId,

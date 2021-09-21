@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const port = process.env.PORT || 3000;
 const app = express();
-var expressWs = require("express-ws")(app);
+const expressWs = require("express-ws")(app);
 
 app.use(express.static(path.join(__dirname, "/html")));
 app.use(express.static(path.join(__dirname, "/js")));
