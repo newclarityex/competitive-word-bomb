@@ -1,21 +1,4 @@
-const defaultOptions = {
-    gametype: "ffa",
-    private: "false",
-    maxWordFrequency: 500,
-    minWordFrequency: 100,
-    freqMarginStart: 4,
-    freqMarginScale: 50,
-    startingLives: 3,
-    startingTime: 20,
-    maxTime: 5,
-    minTime: 1,
-    timeMarginStart: 4,
-    timeMarginScale: 1,
-    lengthBonusStart: 8,
-    lengthBonusEnd: 14,
-    lengthBonusMin: 1,
-    lengthBonusMax: 2,
-};
+const defaultOptions = require("./defaultRoomOptions.json");
 
 const sqlite = require("better-sqlite3");
 const wordListDb = new sqlite("./word_list.db");
