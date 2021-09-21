@@ -10,25 +10,27 @@ class Player {
     }
     lostLife(match) {
         this.lives--;
-        if (lives == 0) {
+        this.remainingTime = match.options.startingTime
+        if (this.lives == 0) {
             match.playerLost(this)
             return;
         }
-        match.sendToAll("lifeLost", {identity:this.identity})
+        match.sendAll("lifeLost", {identity:this.identity})
         match.nextRound();
     }
     startTurn(match) {
-        this.countdownInterval = setInterval(() => {
-            this.remainingTime--;
-            if (remainingTime == 0) {
-                this.lostLife(match)
-            }
-        }, 1000);
+        this.startTime = new Date().getTime()
+        this.countdownTimeout = setTimeout(() => {
+            this.lostLife(match)
+        }, 1000 * this.remainingTime);
     }
-    endTurn(addedTime, bonusMultiplier) {
-        clearInterval(this.countdownInterval)
+    endTurn(match, addedTime, bonusMultiplier) {
+        clearTimeout(this.countdownTimeout)
+        this.remainingTime -= (new Date().getTime() - this.startTime) / 1000
+        console.log(this.remainingTime, addedTime, bonusMultiplier);
         this.remainingTime += addedTime * bonusMultiplier
-        match.sendToAll("endTurn", {identity:this.identity, addedTime, bonusMultiplier})
+        this.remainingTime = parseInt(this.remainingTime)
+        match.sendAll("endTurn", {identity:this.identity, addedTime, bonusMultiplier})
         match.nextRound();
     }
 }

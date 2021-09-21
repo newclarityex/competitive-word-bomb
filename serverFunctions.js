@@ -30,6 +30,19 @@ function getRoom(roomId) {
     return rooms.find(room => room.id == roomId)
 }
 
+function checkTurn(client, room) {
+    if (!room) {
+        return {status:false, error:"Room doesn't exist"}
+    }
+    if (!room.started) {
+        return {status:false, error:"Room hasn't started"}
+    }
+    if (client.id != room.players[room.currentPlayer].client.id) {
+        return {status:false, error:"Not your turn!"}
+    }
+    return {status:true}
+}
+
 module.exports = {
     joinQueue(client, payload) {
         var player = getOrCreatePlayer(payload.identity);
@@ -45,30 +58,29 @@ module.exports = {
         setStatus(player, "online")
         sendClient(client, "console", "Leave queue." + queueList(queue))
     },
+    editWord(client, payload) {
+        var room = getRoom(payload.roomId)
+        if (!checkTurn(client, room)) {
+            sendClient(client, "console", "Unable to edit word.")
+            return
+        }
+        room.sendAll("editWord", {word:payload.word})
+    },
     submitWord(client, payload) {
         var room = getRoom(payload.roomId)
-        if (!room) {
-            sendClient(client, "console", "Unable to submit word, room not found.")
+        var check = checkTurn(client, room)
+        if (!check.status) {
+            sendClient(client, "console", "Unable to submit word. Error: " + check.error)
             return
         }
-        if (!room.started) {
-            sendClient(client, "console", "Unable to submit word, game not started.")
-            return
-        }
-        // future security
-        // if (validatePlayer(payload.validater) != room.players[room.currentPlayer].identity) {
-        if (payload.identity != room.players[room.currentPlayer].identity) {
-            sendClient(client, "console", "Unable to submit word, not your turn!")
-            return
-        }
-        room.submitWord(payload.identity, payload.word, payload.substring)
+        room.submitWord(payload.identity, payload.word, room.substring)
     },
     connect(client, payload) {
         var player = getOrCreatePlayer(payload.identity);
-        setStatus(player, "offline")
+        setStatus(player, "online")
     },
     disconnect(client) {
         var player = removeQueue(queue, client);
-        setStatus(player, "offline")
+        // setStatus(player, "offline");
     }
 }

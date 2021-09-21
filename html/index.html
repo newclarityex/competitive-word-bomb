@@ -8,14 +8,20 @@
     <script defer src="login.js"></script>
     <script defer src="clientFunctions.js"></script>
     <script defer src="websockets.js"></script>
-    <script defer src="hooks.js"></script>
+    <script defer src="init.js"></script>
     <script defer src="Match.js"></script>
     <script defer src="Player.js"></script>
 </head>
 <body>
     Queue List: <span id="queue-list"></span>
+    <br>
     <button id="queue-button">Join Queue</button>
-    Timer: <span id="time-remaining"></span>
-    <input type="text" placeholder="Word Here">
+    <br>
+    Timer: <span id="timer"></span>
+    <br>
+    Substring: <span id="substring"></span>
+    <br>
+    <input type="text" placeholder="Word Here" id="wordInput">
+    <button id="wordButton">Submit</button>
 </body>
 </html>

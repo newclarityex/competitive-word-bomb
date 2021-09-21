@@ -5,7 +5,10 @@ const clientFunctions = {
     matchFound: (payload) => {
         console.log("Match Found!");
     },
-    startGame: (payload) => {
-        
+    matchData: (payload) => {
+        match = new Match(payload.players, payload.options)
+    },
+    startTurn: (payload) => {
+        match.startTurn(payload.player, payload.substring, payload.time)
     }
 }
