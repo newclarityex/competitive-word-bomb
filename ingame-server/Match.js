@@ -11,7 +11,7 @@ function getSubstring(frequency) {
 }
 
 function checkWord(usedWords, word, substring) {
-    if (usedWords.contains(word)) {
+    if (usedWords.includes(word)) {
         return { status: false, error: "Word already used." };
     }
     let sql = "SELECT * FROM words WHERE word=?";
