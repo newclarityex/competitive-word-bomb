@@ -1,86 +1,114 @@
-var players = []
-var queue = []
-var rooms = []
+var players = [];
+var queue = [];
+var rooms = [];
 
-const path = require("path")
+const path = require("path");
 
-const { sendClient, removeQueue, queueList, setStatus, validatePlayer } = require(path.join(__dirname, "/globalFunctions"))
-const matchmakingFunctions = require(path.join(__dirname, "/matchmaking"))
-matchmakingFunctions.startMatchmaking(queue, rooms)
+const {
+    sendClient,
+    removeQueue,
+    queueList,
+    setStatus,
+    validatePlayer,
+} = require(path.join(__dirname, "/globalFunctions"));
+const matchmakingFunctions = require(path.join(__dirname, "/matchmaking"));
+matchmakingFunctions.startMatchmaking(queue, rooms);
 
 function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function (c) {
+            var r = (Math.random() * 16) | 0,
+                v = c == "x" ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+        }
+    );
 }
 
 function getOrCreatePlayer(identity) {
-    var player=players.find((tempid)=>tempid==identity)
-    if(!player){
-        player={
-            identity,elo:2000, status:"offline", validater:uuidv4()
-        }
-        players.push(player)
+    var player = players.find((tempid) => tempid == identity);
+    if (!player) {
+        player = {
+            identity,
+            elo: 2000,
+            status: "offline",
+            validater: uuidv4(),
+        };
+        players.push(player);
     }
-    return player
+    return player;
 }
 
 function getRoom(roomId) {
-    return rooms.find(room => room.id == roomId)
+    return rooms.find((room) => room.id == roomId);
 }
 
 function checkTurn(client, room) {
     if (!room) {
-        return {status:false, error:"Room doesn't exist"}
+        return { status: false, error: "Room doesn't exist" };
     }
     if (!room.started) {
-        return {status:false, error:"Room hasn't started"}
+        return { status: false, error: "Room hasn't started" };
     }
     if (client.id != room.players[room.currentPlayer].client.id) {
-        return {status:false, error:"Not your turn!"}
+        return { status: false, error: "Not your turn!" };
     }
-    return {status:true}
+    return { status: true };
 }
 
 module.exports = {
     joinQueue(client, payload) {
         var player = getOrCreatePlayer(payload.identity);
-        if (queue.find((player)=>player.client==client || player.data.identity == payload.identity || player.data.status == "ingame")) {
-            sendClient(client, "console", "Already in queue!" + queueList(queue))
-            return
+        if (
+            queue.find(
+                (player) =>
+                    player.client == client ||
+                    player.data.identity == payload.identity ||
+                    player.data.status == "ingame"
+            )
+        ) {
+            sendClient(
+                client,
+                "console",
+                "Already in queue!" + queueList(queue)
+            );
+            return;
         }
-        queue.push({data:player, client, joinTime:new Date().getTime()})
-        sendClient(client, "console", "Joined queue." + queueList(queue))
+        queue.push({ data: player, client, joinTime: new Date().getTime() });
+        sendClient(client, "console", "Joined queue." + queueList(queue));
     },
     leaveQueue(client) {
         var player = removeQueue(queue, client);
-        setStatus(player, "online")
-        sendClient(client, "console", "Leave queue." + queueList(queue))
+        setStatus(player, "online");
+        sendClient(client, "console", "Leave queue." + queueList(queue));
     },
     editWord(client, payload) {
-        var room = getRoom(payload.roomId)
+        var room = getRoom(payload.roomId);
         if (!checkTurn(client, room)) {
-            sendClient(client, "console", "Unable to edit word.")
-            return
+            sendClient(client, "console", "Unable to edit word.");
+            return;
         }
-        room.sendAll("editWord", {word:payload.word})
+        room.sendAll("editWord", { word: payload.word });
     },
     submitWord(client, payload) {
-        var room = getRoom(payload.roomId)
-        var check = checkTurn(client, room)
+        var room = getRoom(payload.roomId);
+        var check = checkTurn(client, room);
         if (!check.status) {
-            sendClient(client, "console", "Unable to submit word. Error: " + check.error)
-            return
+            sendClient(
+                client,
+                "console",
+                "Unable to submit word. Error: " + check.error
+            );
+            return;
         }
-        room.submitWord(payload.identity, payload.word, room.substring)
+        room.submitWord(payload.identity, payload.word, room.substring);
     },
     connect(client, payload) {
         var player = getOrCreatePlayer(payload.identity);
-        setStatus(player, "online")
+        setStatus(player, "online");
     },
     disconnect(client) {
         var player = removeQueue(queue, client);
         // setStatus(player, "offline");
-    }
-}
+    },
+};

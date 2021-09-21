@@ -1,33 +1,33 @@
-var match
+var match;
 
 var joinState = false;
 
-var queueBtn = document.getElementById("queue-button")
+var queueBtn = document.getElementById("queue-button");
 queueBtn.addEventListener("click", () => {
     if (joinState) {
         sendServer("leaveQueue");
-        queueBtn.textContent = "Join Queue"
-        joinState = false
+        queueBtn.textContent = "Join Queue";
+        joinState = false;
     } else {
-        sendServer("joinQueue", {identity});
-        queueBtn.textContent = "Leave Queue"
-        joinState = true
+        sendServer("joinQueue", { identity });
+        queueBtn.textContent = "Leave Queue";
+        joinState = true;
     }
-})
+});
 
-var wordInput = document.getElementById('wordInput')
+var wordInput = document.getElementById("wordInput");
 
 function submitWord() {
-    var word = wordInput.value
-    wordInput.value = ""
-    sendServer("submitWord", {identity, roomId:match.options.id, word});
+    var word = wordInput.value;
+    wordInput.value = "";
+    sendServer("submitWord", { identity, roomId: match.options.id, word });
 }
 
 document.getElementById("wordButton").addEventListener("click", () => {
-    submitWord()
-})
-wordInput.onkeydown = function(e){
-    if(e.keyCode == 13){
-        submitWord()
+    submitWord();
+});
+wordInput.onkeydown = function (e) {
+    if (e.keyCode == 13) {
+        submitWord();
     }
- };
+};
