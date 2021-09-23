@@ -9,7 +9,10 @@ const expressWs = require("express-ws")(app);
 app.use(express.static(path.join(__dirname, "/html")));
 app.use(express.static(path.join(__dirname, "/js")));
 
-const serverFunctions = require(path.join(__dirname, "/serverFunctions"));
+const serverFunctions = require(path.join(
+    __dirname,
+    "./server-websockets/serverFunctions"
+));
 
 app.ws("/", function (ws, req) {
     ws.id = uuidv4();

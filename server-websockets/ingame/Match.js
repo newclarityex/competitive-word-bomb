@@ -1,7 +1,8 @@
 const defaultOptions = require("./defaultRoomOptions.json");
-
+const path = require("path");
 const sqlite = require("better-sqlite3");
-const wordListDb = new sqlite("./word_list.db");
+
+const wordListDb = new sqlite(path.join(__dirname, "./word_list.db"));
 
 function getSubstring(frequency) {
     let sql =

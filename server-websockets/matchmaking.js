@@ -4,7 +4,7 @@ const path = require("path");
 
 const { sendClient, queueList, removeQueue } = require(path.join(
     __dirname,
-    "/globalFunctions"
+    "./globalFunctions"
 ));
 
 function generateUniquePairs(arr) {
@@ -51,7 +51,7 @@ function generateRoomId() {
     return result.toUpperCase();
 }
 
-const Match = require("./ingame-server/Match");
+const Match = require(path.join(__dirname, "./ingame/Match"));
 function createRooms(matches, rooms, queue) {
     if (matches.length > 0) {
         for (let i = 0; i < matches.length; i++) {
