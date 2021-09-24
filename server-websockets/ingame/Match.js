@@ -44,6 +44,7 @@ class Match {
         this.id = this.options.id;
         this.substring = "";
         this.usedWords = [];
+        this.frequency = this.options.maxWordFrequency;
         this.sendAll("matchData", {
             players: players.map((player) => player.data.identity),
             options: this.options,
@@ -66,18 +67,7 @@ class Match {
         console.log("GAME OVER");
         this.sendAll("gameOver", { winner: winner.identity });
     }
-    nextRound() {
-        if (this.players.filter((player) => player.lives != 0).length == 1) {
-            this.gameOver(this.players.find((player) => player.lives != 0));
-            return;
-        }
-        do {
-            this.currentPlayer++;
-            this.currentPlayer %= this.players.length;
-        } while (this.players[this.currentPlayer].lives == 0);
-
-        this.round++;
-
+    getFrequency() {
         let frequency = this.options.maxWordFrequency;
         if (this.combo > this.options.freqMarginStart) {
             frequency = Math.max(
@@ -86,11 +76,38 @@ class Match {
                         this.options.freqMarginScale,
                 this.options.minWordFrequency
             );
+        }
+        return frequency;
+    }
+    updateDifficulty() {
+        let newFrequency = this.getFrequency();
+        if (this.frequency > newFrequency) {
+            this.frequency = newFrequency;
             this.sendAll("difficultyUp", {
                 frequency,
             });
         }
-        console.log(frequency);
+    }
+    checkRemainingPlayers() {
+        if (this.players.filter((player) => player.lives != 0).length == 1) {
+            this.gameOver(this.players.find((player) => player.lives != 0));
+            return;
+        }
+    }
+    nextPlayer() {
+        do {
+            this.currentPlayer++;
+            this.currentPlayer %= this.players.length;
+        } while (this.players[this.currentPlayer].lives == 0);
+    }
+    nextRound() {
+        this.checkRemainingPlayers();
+        this.nextPlayer();
+
+        this.round++;
+
+        this.updateDifficulty();
+
         this.substring = getSubstring(frequency);
 
         let player = this.players[this.currentPlayer];
