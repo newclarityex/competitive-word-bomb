@@ -8,18 +8,7 @@ const fs = require("fs");
 const uri = fs.readFileSync("./api/mongodb-uri.txt", { encoding: "utf8" });
 mongoose.connect(uri, { sslValidate: false });
 
-const User = require("./api/schemas/User");
-// User.register({ username: "username" }, "password", function (err, user) {
-//     if (err) {
-//         console.log(err);
-//     }
-
-//     var authenticate = User.authenticate();
-//     authenticate("username", "password", function (err, result) {
-//         console.log(err);
-//         console.log(result);
-//     });
-// });
+const User = require("./api/models/User");
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -29,6 +18,8 @@ const apiLimiter = rateLimit({
 const port = process.env.PORT || 3000;
 const app = express();
 const expressWs = require("express-ws")(app);
+
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "/html")));
 app.use(express.static(path.join(__dirname, "/js")));
@@ -49,6 +40,11 @@ app.ws("/", function (ws, req) {
 });
 
 app.use("/api/", apiLimiter);
+const authenticationRouter = require(path.join(
+    __dirname,
+    "/api/routers/authentication"
+));
+app.use("/api", authenticationRouter);
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
