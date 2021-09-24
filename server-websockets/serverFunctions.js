@@ -50,7 +50,7 @@ function checkTurn(client, room) {
     if (!room.started) {
         return { status: false, error: "Room hasn't started" };
     }
-    if (client.id != room.players[room.currentPlayer].client.id) {
+    if (client != room.players[room.currentPlayer].client) {
         return { status: false, error: "Not your turn!" };
     }
     return { status: true };
