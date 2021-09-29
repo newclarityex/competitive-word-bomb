@@ -16,12 +16,12 @@ const jwt = require("jsonwebtoken");
 
 router.post("/register", (req, res) => {
     let body = req.body;
-    console.log(JSON.stringify(body));
+
     const { error } = authenticationSchema.validate(req.body);
     if (error) return res.status(400).json({ success: false, message: error });
 
-    if (censor.isProfaneIsh(body.username)) {
-        return res.status(400).send("Invalid Username");
+    if (censor.isProfane(body.username)) {
+        return res.status(400).send("Inappropriate Username.");
     }
 
     let userData = { username: body.username };
