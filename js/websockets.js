@@ -1,6 +1,10 @@
 const port = 3000;
 const socket = new WebSocket("ws://localhost:" + port);
 
+socket.addEventListener("open", (event) => {
+    console.log("Successfully connected!");
+});
+
 function sendServer(type, payload) {
     socket.send(JSON.stringify({ type, payload }));
 }

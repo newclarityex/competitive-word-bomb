@@ -4,6 +4,7 @@ const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const rateLimit = require("express-rate-limit");
 const fs = require("fs");
+const cookieParser = require("cookie-parser");
 
 const uri = fs.readFileSync("./api/mongodb-uri.txt", { encoding: "utf8" });
 mongoose.connect(uri, { sslValidate: false });
@@ -20,6 +21,7 @@ const app = express();
 const expressWs = require("express-ws")(app);
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "/html")));
 app.use(express.static(path.join(__dirname, "/js")));
@@ -29,9 +31,22 @@ const serverFunctions = require(path.join(
     "./server-websockets/serverFunctions"
 ));
 
+const authorizationMiddleware = require(path.join(
+    __dirname,
+    "/api/middleware/authorization"
+));
+app.use("/", authorizationMiddleware);
+
+const { sendClient } = require("./server-websockets/globalFunctions");
+
 app.ws("/", function (ws, req) {
+    ws.user = req.user;
     ws.on("message", function (data) {
-        data = JSON.parse(data);
+        try {
+            data = JSON.parse(data);
+        } catch (error) {
+            sendClient(ws, "console", "Invalid socket request.");
+        }
         serverFunctions[data.type](ws, data.payload);
     });
     ws.on("close", function () {

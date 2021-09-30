@@ -14,30 +14,7 @@ const {
 const matchmakingFunctions = require(path.join(__dirname, "/matchmaking"));
 matchmakingFunctions.startMatchmaking(queue, rooms);
 
-function uuidv4() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-        /[xy]/g,
-        function (c) {
-            let r = (Math.random() * 16) | 0,
-                v = c == "x" ? r : (r & 0x3) | 0x8;
-            return v.toString(16);
-        }
-    );
-}
-
-function getOrCreatePlayer(identity) {
-    let player = players.find((tempid) => tempid == identity);
-    if (!player) {
-        player = {
-            identity,
-            elo: 2000,
-            status: "offline",
-            validater: uuidv4(),
-        };
-        players.push(player);
-    }
-    return player;
-}
+const User = require("../api/models/User");
 
 function getRoom(roomId) {
     return rooms.find((room) => room.id == roomId);
@@ -58,13 +35,16 @@ function checkTurn(client, room) {
 
 module.exports = {
     joinQueue(client, payload) {
-        let player = getOrCreatePlayer(payload.identity);
+        if (client.user.id.startsWith("guest")) {
+            sendClient(client, "console", "Guests cannot queue matchmaking!");
+            return;
+        }
+        let player = client.user;
         if (
             queue.find(
-                (player) =>
-                    player.client == client ||
-                    player.data.identity == payload.identity ||
-                    player.data.status == "ingame"
+                (queuedPlayer) =>
+                    queuedPlayer.client == client ||
+                    queuedPlayer.data._id == player._id
             )
         ) {
             sendClient(
@@ -78,7 +58,14 @@ module.exports = {
         sendClient(client, "console", "Joined queue." + queueList(queue));
     },
     leaveQueue(client) {
-        let player = removeQueue(queue, client);
+        if (client.user.id.startsWith("guest")) {
+            sendClient(client, "console", "Guests cannot queue matchmaking!");
+            return;
+        }
+        let player = client.user;
+        queue = queue.filter(
+            (queuedPlayer) => queuedPlayer.data._id != player._id
+        );
         setStatus(player, "online");
         sendClient(client, "console", "Leave queue." + queueList(queue));
     },
@@ -102,10 +89,6 @@ module.exports = {
             return;
         }
         room.submitWord(payload.identity, payload.word, room.substring);
-    },
-    connect(client, payload) {
-        let player = getOrCreatePlayer(payload.identity);
-        setStatus(player, "online");
     },
     disconnect(client) {
         let player = removeQueue(queue, client);

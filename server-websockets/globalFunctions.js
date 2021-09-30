@@ -1,9 +1,11 @@
+const User = require("../api/models/User");
+
 module.exports = {
     sendClient(client, type, payload) {
         client.send(JSON.stringify({ type, payload }));
     },
     setStatus(player, status) {
-        //player.status = status;
+        User.findByIdAndUpdate(player.id, { status });
     },
     removeQueue(queue, client) {
         for (let i = queue.length - 1; i >= 0; i--) {
@@ -16,7 +18,7 @@ module.exports = {
         return removedPlayer;
     },
     queueList(queue) {
-        return JSON.stringify(queue.map((player) => player.data.identity));
+        return JSON.stringify(queue.map((player) => player.data.username));
     },
     // future security
     validatePlayer(validater) {

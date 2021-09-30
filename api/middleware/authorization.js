@@ -1,19 +1,25 @@
 const jwt = require("jsonwebtoken");
+const { v4 } = require("uuid");
+const User = require("../models/User");
+const config = require("../config.json");
 
-const config = process.env || require("../config.json");
-
-const verifyToken = (req, res, next) => {
-    const token = req.body.token;
-
+const verifyToken = async (req, res, next) => {
+    const token = req.cookies.token;
     if (!token) {
-        return res.status(403).send("A token is required for authentication");
+        req.user = { id: "guest-" + v4(), username: "Guest", admin: false };
+        return next();
     }
     try {
-        const decoded = jwt.verify(token, config.secret);
-        req.user = decoded;
+        var decoded = jwt.verify(token, config.secret);
     } catch (err) {
-        return res.status(401).send("Invalid Token");
+        console.log(err);
+        return res.status(401).send("Invalid Token.");
     }
+    let player = await User.findById(decoded.id).exec();
+    if (player === null) {
+        return res.status(401).send("User not found.");
+    }
+    req.user = player;
     return next();
 };
 

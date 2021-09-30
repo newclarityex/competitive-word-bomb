@@ -8,6 +8,7 @@ const User = new Schema({
         default: 1500,
     },
     email: String,
+    status: String,
     admin: {
         type: Boolean,
         default: false,

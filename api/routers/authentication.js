@@ -31,6 +31,9 @@ router.post("/register", (req, res) => {
 
     User.register(userData, body.password, function (err, user) {
         if (err) {
+            if (err.name == "UserExistsError") {
+                return res.status(400).send("User already exists!");
+            }
             return res
                 .status(500)
                 .send("Unable to register user, please try again later.");
@@ -40,7 +43,8 @@ router.post("/register", (req, res) => {
             process.env.SECRET || config.secret,
             { expiresIn: 60 * 60 * 24 * 365 }
         );
-        return res.status("200").send(token);
+        res.cookie("token", token, { maxAge: 900000, httpOnly: true });
+        return res.sendStatus(200);
     });
 });
 
@@ -60,10 +64,11 @@ router.post("/login", (req, res) => {
         }
         let token = jwt.sign(
             { id: user.id, username: user.username, admin: user.admin },
-            process.env.SECRET || config.secret,
+            config.secret,
             { expiresIn: 60 * 60 * 24 * 365 }
         );
-        return res.status("200").send(token);
+        res.cookie("token", token, { maxAge: 900000, httpOnly: true });
+        return res.sendStatus(200);
     });
 });
 
