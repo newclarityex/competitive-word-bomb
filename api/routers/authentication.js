@@ -18,7 +18,7 @@ router.post("/register", (req, res) => {
     let body = req.body;
 
     const { error } = authenticationSchema.validate(req.body);
-    if (error) return res.status(400).json({ success: false, message: error });
+    if (error) return res.status(400).send(error.details[0].message);
 
     if (censor.isProfane(body.username)) {
         return res.status(400).send("Inappropriate Username.");
@@ -44,7 +44,7 @@ router.post("/register", (req, res) => {
             { expiresIn: 60 * 60 * 24 * 365 }
         );
         res.cookie("token", token, { maxAge: 900000, httpOnly: true });
-        return res.sendStatus(200);
+        return res.status(200).send(token);
     });
 });
 
@@ -52,7 +52,7 @@ router.post("/login", (req, res) => {
     let body = req.body;
 
     const { error } = authenticationSchema.validate(req.body);
-    if (error) return res.status(400).json({ success: false, message: error });
+    if (error) return res.status(400).send(error.details[0].message);
 
     let authenticate = User.authenticate();
     authenticate(body.username, body.password, function (err, user) {
@@ -62,17 +62,26 @@ router.post("/login", (req, res) => {
                 .status(500)
                 .send("Unable to login, please try again later.");
         }
+        if (!user) {
+            return res.status(400).send("Invalid credentials.");
+        }
         let token = jwt.sign(
             { id: user.id, username: user.username, admin: user.admin },
             config.secret,
-            { expiresIn: 60 * 60 * 24 * 365 }
+            { expiresIn: 365 * 24 * 60 * 60 }
         );
         res.cookie("token", token, {
             maxAge: 365 * 24 * 60 * 60,
             httpOnly: true,
         });
-        return res.sendStatus(200);
+        return res.status(200).send(token);
     });
+});
+
+router.post("/logout", (req, res) => {
+    console.log(req.cookies.token);
+    res.clearCookie("token");
+    return res.sendStatus(200);
 });
 
 module.exports = router;

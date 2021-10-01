@@ -1,11 +1,60 @@
-function uuidv4() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-        /[xy]/g,
-        function (c) {
-            let r = (Math.random() * 16) | 0,
-                v = c == "x" ? r : (r & 0x3) | 0x8;
-            return v.toString(16);
-        }
-    );
+function register(username, password) {
+    fetch("http://localhost:3000/api/register", {
+        method: "post",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            username,
+            password,
+        }),
+    })
+        .then((res) => {
+            if (res.status == 200) {
+                location.reload();
+                return;
+            }
+            return res.text();
+        })
+        .then((data) => {
+            if (data) {
+                alert(data);
+            }
+        });
 }
-var identity = uuidv4();
+
+function login(username, password) {
+    fetch("http://localhost:3000/api/login", {
+        method: "post",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            username,
+            password,
+        }),
+    })
+        .then((res) => {
+            if (res.status == 200) {
+                location.reload();
+                return;
+            }
+            return res.text();
+        })
+        .then((data) => {
+            if (data) {
+                alert(data);
+            }
+        });
+}
+
+function logout() {
+    fetch("http://localhost:3000/api/logout", {
+        method: "post",
+    }).then((res) => {
+        console.log(res);
+        location.reload();
+    });
+}

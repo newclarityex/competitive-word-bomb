@@ -113,15 +113,12 @@ class Match {
                 player1Data.elo
             );
         }
-        console.log("Player 1 new elo: ", player1Elo);
-        console.log("Player 2 new elo: ", player2Elo);
         player1.setElo(player1Elo);
         player2.setElo(player2Elo);
     }
     checkRemainingPlayers() {
         // If there are more than 1 remaining players, return true.
         if (this.players.filter((player) => player.lives != 0).length == 1) {
-            this.gameOver(this.players.find((player) => player.lives != 0));
             return false;
         }
         return true;
@@ -138,6 +135,7 @@ class Match {
     }
     nextRound() {
         if (!this.checkRemainingPlayers()) {
+            this.gameOver(this.players.find((player) => player.lives != 0));
             return;
         }
 

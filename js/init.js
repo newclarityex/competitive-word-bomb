@@ -9,7 +9,7 @@ queueBtn.addEventListener("click", () => {
         queueBtn.textContent = "Join Queue";
         joinState = false;
     } else {
-        sendServer("joinQueue", { identity });
+        sendServer("joinQueue");
         queueBtn.textContent = "Leave Queue";
         joinState = true;
     }
@@ -31,15 +31,3 @@ wordInput.onkeydown = function (e) {
         submitWord();
     }
 };
-
-// fetch("http://localhost:3000/api/login", {
-//     method: "post",
-//     headers: {
-//         Accept: "application/json, text/plain, */*",
-//         "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//         username: "TestUser2",
-//         password: "TestPassword2",
-//     }),
-// });
