@@ -67,7 +67,10 @@ router.post("/login", (req, res) => {
             config.secret,
             { expiresIn: 60 * 60 * 24 * 365 }
         );
-        res.cookie("token", token, { maxAge: 900000, httpOnly: true });
+        res.cookie("token", token, {
+            maxAge: 365 * 24 * 60 * 60,
+            httpOnly: true,
+        });
         return res.sendStatus(200);
     });
 });

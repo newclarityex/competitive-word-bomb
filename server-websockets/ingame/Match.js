@@ -24,6 +24,19 @@ function checkWord(usedWords, word, substring) {
     }
 }
 
+const Elo = require("arpad");
+
+const uscf = {
+    default: 32,
+    2100: 24,
+    2400: 16,
+};
+
+const min_score = 100;
+const max_score = 10000;
+
+const elo = new Elo(uscf, min_score, max_score);
+
 const Player = require("./Player");
 const { sendClient } = require("../globalFunctions");
 
@@ -66,6 +79,38 @@ class Match {
     gameOver(winner) {
         console.log("GAME OVER");
         this.sendAll("gameOver", { winner: winner.identity });
+        if (this.options.gametype == "ranked") {
+            this.calculateElo();
+        }
+    }
+    calculateElo() {
+        let player1 = this.players[0];
+        let player2 = this.players[1];
+        let player1Data = player1.client.user;
+        let player2Data = player2.client.user;
+        if (player1.lives == 0) {
+            var player1Elo = elo.newRatingIfLost(
+                player1Data.elo,
+                player2Data.elo
+            );
+            var player2Elo = elo.newRatingIfWon(
+                player2Data.elo,
+                player1Data.elo
+            );
+        } else {
+            var player1Elo = elo.newRatingIfWon(
+                player1Data.elo,
+                player2Data.elo
+            );
+            var player2Elo = elo.newRatingIfLost(
+                player2Data.elo,
+                player1Data.elo
+            );
+        }
+        console.log("Player 1 new elo: ", player1Elo);
+        console.log("Player 2 new elo: ", player2Elo);
+        player1.setElo(player1Elo);
+        player2.setElo(player2Elo);
     }
     getFrequency() {
         let frequency = this.options.maxWordFrequency;
@@ -84,15 +129,17 @@ class Match {
         if (this.frequency > newFrequency) {
             this.frequency = newFrequency;
             this.sendAll("difficultyUp", {
-                frequency,
+                frequency: this.frequency,
             });
         }
     }
     checkRemainingPlayers() {
+        // If there are more than 1 remaining players, return true.
         if (this.players.filter((player) => player.lives != 0).length == 1) {
             this.gameOver(this.players.find((player) => player.lives != 0));
-            return;
+            return false;
         }
+        return true;
     }
     nextPlayer() {
         do {
@@ -101,14 +148,17 @@ class Match {
         } while (this.players[this.currentPlayer].lives == 0);
     }
     nextRound() {
-        this.checkRemainingPlayers();
+        if (!this.checkRemainingPlayers()) {
+            return;
+        }
+
         this.nextPlayer();
 
         this.round++;
 
         this.updateDifficulty();
 
-        this.substring = getSubstring(frequency);
+        this.substring = getSubstring(this.frequency);
 
         let player = this.players[this.currentPlayer];
         this.sendAll("startTurn", {
@@ -151,15 +201,18 @@ class Match {
         }
         return [modifiedAddedTime, bonusMultiplier];
     }
-    submitWord(identity, word, substring) {
+    submitWord(client, word, substring) {
         word = word.toLowerCase();
         let player = this.players[this.currentPlayer];
-        if (identity != player.identity) {
+        if (client != player.client) {
             return;
         }
-        let check = checkWord(word, substring);
+        let check = checkWord(this.usedWords, word, substring);
         if (!check.status) {
-            this.sendAll("failedSubmit", { identity, reason: check.error });
+            this.sendAll("failedSubmit", {
+                id: client.user._id,
+                reason: check.error,
+            });
             return;
         }
         let addedTimes = this.calculateTime(word);

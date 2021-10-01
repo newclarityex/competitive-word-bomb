@@ -23,7 +23,7 @@ function validateMatch(pair, matchedPlayers) {
     }
     let lowestTime = Math.max(pair[0].joinTime, pair[1].joinTime);
     let timeInQueue = (new Date().getTime() - lowestTime) / 1000;
-    let ratingDifference = Math.abs(pair[0].data.rating - pair[1].data.rating);
+    let ratingDifference = Math.abs(pair[0].data.elo - pair[1].data.elo);
     if (ratingDifference > thresholdPerSecond * timeInQueue) {
         return false;
     }

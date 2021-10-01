@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "arpad": "^2.0.0",
     "better-sqlite3": "^7.4.3",
     "censor-sensor": "^1.0.6",
     "cookie-parser": "^1.4.5",

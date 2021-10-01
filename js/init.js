@@ -20,7 +20,7 @@ var wordInput = document.getElementById("wordInput");
 function submitWord() {
     var word = wordInput.value;
     wordInput.value = "";
-    sendServer("submitWord", { identity, roomId: match.options.id, word });
+    sendServer("submitWord", { roomId: match.options.id, word });
 }
 
 document.getElementById("wordButton").addEventListener("click", () => {
@@ -31,3 +31,15 @@ wordInput.onkeydown = function (e) {
         submitWord();
     }
 };
+
+// fetch("http://localhost:3000/api/login", {
+//     method: "post",
+//     headers: {
+//         Accept: "application/json, text/plain, */*",
+//         "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//         username: "TestUser2",
+//         password: "TestPassword2",
+//     }),
+// });

@@ -88,7 +88,7 @@ module.exports = {
             );
             return;
         }
-        room.submitWord(payload.identity, payload.word, room.substring);
+        room.submitWord(client, payload.word, room.substring);
     },
     disconnect(client) {
         let player = removeQueue(queue, client);

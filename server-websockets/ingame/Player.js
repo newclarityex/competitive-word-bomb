@@ -1,5 +1,7 @@
 const { sendClient } = require("../globalFunctions");
 
+const User = require("../../api/models/User");
+
 class Player {
     constructor(client, player, options) {
         this.client = client;
@@ -36,6 +38,13 @@ class Player {
             bonusMultiplier,
         });
         match.nextRound();
+    }
+    setElo(elo) {
+        User.findByIdAndUpdate(this.client.user._id, { elo }, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
     }
 }
 

@@ -5,7 +5,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const User = new Schema({
     elo: {
         type: Number,
-        default: 1500,
+        default: 1300,
     },
     email: String,
     status: String,
