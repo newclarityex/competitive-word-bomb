@@ -1,10 +1,24 @@
 {
     "gametype": "ffa",
     "private": "false",
-    "maxWordFrequency": 500,
-    "minWordFrequency": 100,
-    "freqMarginStart": 4,
-    "freqMarginScale": 50,
+    "difficultyUpFrequency": 6,
+    "difficultyRanges": [
+        [70000, 10000],
+        [9999, 5000],
+        [4999, 2000],
+        [1999, 1000],
+        [999, 500],
+        [499, 300],
+        [299, 200],
+        [199, 100]
+    ],
+    "eloDifficulties": [
+        {"min": 100, "max": 1199, "difficulty" : 0},
+        {"min": 1200, "max": 1499, "difficulty" : 1},
+        {"min": 1500, "max": 1799, "difficulty" : 2},
+        {"min": 1800, "max": 2099, "difficulty" : 3},
+        {"min": 2100, "max": 10000, "difficulty" : 4}
+    ],
     "startingLives": 3,
     "startingTime": 20,
     "maxTime": 5,

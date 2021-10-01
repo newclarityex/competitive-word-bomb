@@ -4,10 +4,12 @@ const sqlite = require("better-sqlite3");
 
 const wordListDb = new sqlite(path.join(__dirname, "./word_list.db"));
 
-function getSubstring(frequency) {
+function getSubstring(difficultyRange) {
     let sql =
-        "SELECT * FROM substrings WHERE frequency>? ORDER BY RANDOM() LIMIT 1";
-    let row = wordListDb.prepare(sql).get(frequency);
+        "SELECT * FROM substrings WHERE frequency BETWEEN ? AND ? ORDER BY RANDOM() LIMIT 1";
+    let row = wordListDb
+        .prepare(sql)
+        .get(difficultyRange[1], difficultyRange[0]);
     return row.substring;
 }
 
@@ -57,12 +59,16 @@ class Match {
         this.id = this.options.id;
         this.substring = "";
         this.usedWords = [];
-        this.frequency = this.options.maxWordFrequency;
+        this.difficulty = 0;
         this.sendAll("matchData", {
             players: players.map((player) => player.data.identity),
             options: this.options,
         });
         if (this.options.gametype == "ranked") {
+            let avgElo = (this.players[0].elo + this.players[1].elo) / 2;
+            this.difficulty = this.options.eloDifficulties.find(
+                (bracket) => bracket.min <= avgElo && bracket.max >= avgElo
+            );
             this.startGame();
         }
     }
@@ -112,27 +118,6 @@ class Match {
         player1.setElo(player1Elo);
         player2.setElo(player2Elo);
     }
-    getFrequency() {
-        let frequency = this.options.maxWordFrequency;
-        if (this.combo > this.options.freqMarginStart) {
-            frequency = Math.max(
-                this.options.maxWordFrequency -
-                    (this.combo - this.options.freqMarginStart) *
-                        this.options.freqMarginScale,
-                this.options.minWordFrequency
-            );
-        }
-        return frequency;
-    }
-    updateDifficulty() {
-        let newFrequency = this.getFrequency();
-        if (this.frequency > newFrequency) {
-            this.frequency = newFrequency;
-            this.sendAll("difficultyUp", {
-                frequency: this.frequency,
-            });
-        }
-    }
     checkRemainingPlayers() {
         // If there are more than 1 remaining players, return true.
         if (this.players.filter((player) => player.lives != 0).length == 1) {
@@ -147,6 +132,10 @@ class Match {
             this.currentPlayer %= this.players.length;
         } while (this.players[this.currentPlayer].lives == 0);
     }
+    updateDifficulty() {
+        this.difficulty++;
+        this.sendAll("difficultyUp", {});
+    }
     nextRound() {
         if (!this.checkRemainingPlayers()) {
             return;
@@ -156,9 +145,12 @@ class Match {
 
         this.round++;
 
-        this.updateDifficulty();
+        if (this.round % this.options.difficultyUpFrequency == 0) {
+            this.updateDifficulty();
+        }
 
-        this.substring = getSubstring(this.frequency);
+        let wordFrequencyRange = this.options.difficultyRanges[this.difficulty];
+        this.substring = getSubstring(wordFrequencyRange);
 
         let player = this.players[this.currentPlayer];
         this.sendAll("startTurn", {
