@@ -25,6 +25,7 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "/html")));
 app.use(express.static(path.join(__dirname, "/js")));
+app.use(express.static(path.join(__dirname, "/css")));
 
 const serverFunctions = require(path.join(
     __dirname,
