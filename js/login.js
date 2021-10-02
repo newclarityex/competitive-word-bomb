@@ -9,19 +9,13 @@ function register(username, password) {
             username,
             password,
         }),
-    })
-        .then((res) => {
-            if (res.status == 200) {
-                location.reload();
-                return;
-            }
-            return res.text();
-        })
-        .then((data) => {
-            if (data) {
-                alert(data);
-            }
-        });
+    }).then((res) => {
+        if (res.status == 200) {
+            location.reload();
+            return;
+        }
+        res.text().then((data) => alert(data));
+    });
 }
 
 function login(username, password) {
@@ -35,19 +29,13 @@ function login(username, password) {
             username,
             password,
         }),
-    })
-        .then((res) => {
-            if (res.status == 200) {
-                location.reload();
-                return;
-            }
-            return res.text();
-        })
-        .then((data) => {
-            if (data) {
-                alert(data);
-            }
-        });
+    }).then((res) => {
+        if (res.status == 200) {
+            location.reload();
+            return;
+        }
+        res.text().then((data) => alert(data));
+    });
 }
 
 function logout() {
