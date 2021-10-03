@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #b9e6ff;
+    font-family: "Lexend", sans-serif;
+}
+.navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    background-color: #004777;
+    padding: 4px 0;
+}
+
+.logo {
+    width: 20%;
+    text-align: center;
+    color: white;
+}
+
+.navlink {
+    margin: 0px 40px;
+}
+
+.navlink.active {
+    color: #2dd881;
+}
+
+.navbar-navlink-wrapper {
+    width: 60%;
+}
+
+.navbar-buttons-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 20%;
+}
+
+.navlink {
+    color: white;
+    text-decoration: none;
+    font-size: 28px;
+}
+
+.auth-modal {
+    display: none;
+    display: grid;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+}
+
+.modal-box {
+    position: relative;
+    display: none;
+    background-color: cornflowerblue;
+    width: 400px;
+    height: 600px;
+    border-radius: 16px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.close-auth-modal {
+    position: absolute;
+    font-size: 36px;
+    padding: none;
+    margin: 0 6px;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.modal-box.login {
+    display: flex;
+}
+
+.login-button {
+    background-color: #5c95ff;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.signup-button {
+    background-color: #0cb15c;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 12px;
+    font-weight: bold;
+    color: white;
+}
