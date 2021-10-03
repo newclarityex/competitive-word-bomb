@@ -28,42 +28,48 @@
             <a class="navlink" href="/about">About</a>
         </div>
         <div class="navbar-buttons-wrapper">
-            <button class="login-button">Login</button>
-            <button class="signup-button">Sign Up</button>
+            <button class="login-button" onclick="openModal('login')">Login</button>
+            <button class="signup-button" onclick="openModal('register')">Sign Up</button>
         </div>
     </div>
 
     <div class="auth-modal">
-        <div class="modal-box login">
-            <button class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
-            <h1>Log In</h1>
-            <label for="username">Username:</label>
-            <input type="text">
-            <label for="password">Password:</label>
-            <input type="password">
-            <button>Forgot Password?</button>
-            <button>Login</button>
-            <button>Signup</button>
-        </div>
-        <div class="modal-box register-modal">
-            <button class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
-            <h1>Sign Up</h1>
-            <label for="username">Username:</label>
-            <input type="text">
-            <label for="email">Email(Optional):</label>
-            <input type="email">
-            <label for="password">Password:</label>
-            <input type="password">
-            <button>Signup</button>
-            <button>Login</button>
-        </div>
-        <div class="modal-box password-reset-modal">
-            <button class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
-            <h1>Reset Password</h1>
-            <label for="email">Email:</label>
-            <input type="email">
-            <button>Reset Password</button>
-        </div>
+        <div class="modal-outside" onclick="closeAuthModal()"></div>
+        <form class="modal-box login" action="/">
+            <button type="button" class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
+            <h1 class="auth-title">Log In</h1>
+            <input class="auth-input" type="text" name="username" placeholder="Username" pattern="^\S+$"
+                title="No spaces allowed." required maxlength="32">
+            <div>
+                <input class="auth-input" type="password" name="password" placeholder="Password" required minlength="8"
+                    maxlength="2048">
+                <button type="button" class="forgot-password" onclick="openModal('password-reset')">Forgot
+                    Password?</button>
+            </div>
+            <div class="modal-buttons-wrapper">
+                <button class="submit-button" onclick="submitLogin">Submit</button>
+            </div>
+        </form>
+        <form class="modal-box register">
+            <button type="button" class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
+            <h1 class="auth-title">Sign Up</h1>
+            <input class="auth-input" type="text" placeholder="Username" pattern="^\S+$" title="No spaces allowed."
+                required maxlength="32">
+            <input class="auth-input" type="email" placeholder="Email(Optional)">
+            <span class="modal-info">(For password recovery)</span>
+            <input class="auth-input" type="password" placeholder="Password" required minlength="8" maxlength="2048">
+            <div class="modal-buttons-wrapper">
+                <button class="submit-button">Submit</button>
+            </div>
+        </form>
+        <form class="modal-box password-reset">
+            <button type="button" class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
+            <h1 class="auth-title">Reset Password</h1>
+            <input class="auth-input" type="email" placeholder="Email">
+            <div class="modal-buttons-wrapper">
+                <button class="submit-button">Submit</button>
+            </div>
+        </form>
     </div>
 
     Queue List: <span id="queue-list"></span>

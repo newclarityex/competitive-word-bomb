@@ -4,6 +4,13 @@ body {
     background-color: #b9e6ff;
     font-family: "Lexend", sans-serif;
 }
+button,
+input {
+    font-family: "Lexend", sans-serif;
+}
+button:hover {
+    cursor: pointer;
+}
 .navbar {
     display: flex;
     flex-direction: row;
@@ -45,9 +52,8 @@ body {
 }
 
 .auth-modal {
+    /* display: grid; */
     display: none;
-    display: grid;
-    background-color: rgba(0, 0, 0, 0.3);
     position: absolute;
     top: 0;
     left: 0;
@@ -55,16 +61,24 @@ body {
     height: 100%;
     place-items: center;
 }
+.modal-outside {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
 
 .modal-box {
     position: relative;
     display: none;
-    background-color: cornflowerblue;
+    background-color: #a663cc;
     width: 400px;
-    height: 600px;
     border-radius: 16px;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    z-index: 2;
 }
 
 .close-auth-modal {
@@ -76,10 +90,29 @@ body {
     right: 0;
     border: none;
     background-color: transparent;
+    color: white;
 }
 
 .modal-box.login {
-    display: flex;
+    /* display: grid; */
+    grid-auto-rows: 100px 60px 60px 100px;
+}
+
+.modal-box.register {
+    /* display: grid; */
+    grid-auto-rows: 100px 60px 40px 40px 40px 100px;
+}
+
+.modal-box.password-reset {
+    /* display: grid; */
+    grid-auto-rows: 100px 40px 100px;
+}
+
+.modal-info {
+    text-align: center;
+    line-height: 20px;
+    color: white;
+    font-size: 16px;
 }
 
 .login-button {
@@ -100,4 +133,44 @@ body {
     padding: 12px;
     font-weight: bold;
     color: white;
+}
+
+.submit-button {
+    background-color: #0cb15c;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.auth-title {
+    color: white;
+    text-align: center;
+}
+
+.auth-input {
+    border-radius: 4px;
+    width: 250px;
+    height: 30px;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 8px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    text-decoration: underline;
+}
+
+.modal-buttons-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
 }

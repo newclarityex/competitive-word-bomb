@@ -1,14 +1,18 @@
-function register(username, password) {
+function register(username, password, email) {
+    let params = {
+        username,
+        password,
+    };
+    if (email) {
+        params.email = email;
+    }
     fetch("http://localhost:3000/api/register", {
         method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-            username,
-            password,
-        }),
+        body: JSON.stringify(params),
     }).then((res) => {
         if (res.status == 200) {
             location.reload();
@@ -45,4 +49,42 @@ function logout() {
         console.log(res);
         location.reload();
     });
+}
+
+const authModalWrapper = document.getElementsByClassName("auth-modal")[0];
+const modalBoxes = document.getElementsByClassName("modal-box");
+const loginModal = document.getElementsByClassName("modal-box login")[0];
+const registerModal = document.getElementsByClassName("modal-box register")[0];
+
+function closeAuthModal() {
+    authModalWrapper.style.display = "none";
+}
+
+function openModal(modal) {
+    authModalWrapper.style.display = "grid";
+    for (let i = 0; i < modalBoxes.length; i++) {
+        const element = modalBoxes[i];
+        if (element.classList.contains(modal)) {
+            element.style.display = "grid";
+        } else {
+            element.style.display = "none";
+        }
+    }
+}
+
+loginModal.addEventListener("submit", submitLogin, true);
+function submitLogin(e) {
+    e.preventDefault();
+    let username = loginModal.getElementsByClassName("auth-input")[0].value;
+    let password = loginModal.getElementsByClassName("auth-input")[0].value;
+    login(username, password);
+}
+
+registerModal.addEventListener("submit", submitRegister, true);
+function submitRegister(e) {
+    e.preventDefault();
+    let username = registerModal.getElementsByClassName("auth-input")[0].value;
+    let email = registerModal.getElementsByClassName("auth-input")[1].value;
+    let password = registerModal.getElementsByClassName("auth-input")[2].value;
+    register(username, password, email);
 }

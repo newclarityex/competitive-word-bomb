@@ -16,6 +16,7 @@ const jwt = require("jsonwebtoken");
 
 router.post("/register", (req, res) => {
     let body = req.body;
+    body.username = body.username.toLowerCase();
 
     const { error } = authenticationSchema.validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -50,6 +51,7 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
     let body = req.body;
+    body.username = body.username.toLowerCase();
 
     const { error } = authenticationSchema.validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
