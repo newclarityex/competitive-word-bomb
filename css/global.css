@@ -60,6 +60,8 @@ button:hover {
     width: 100%;
     height: 100%;
     place-items: center;
+    opacity: 0;
+    transition: 0.3s;
 }
 .modal-outside {
     background-color: rgba(0, 0, 0, 0.3);

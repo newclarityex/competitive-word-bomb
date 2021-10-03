@@ -57,11 +57,17 @@ const loginModal = document.getElementsByClassName("modal-box login")[0];
 const registerModal = document.getElementsByClassName("modal-box register")[0];
 
 function closeAuthModal() {
-    authModalWrapper.style.display = "none";
+    authModalWrapper.style.opacity = "0";
+    setTimeout(() => {
+        authModalWrapper.style.display = "none";
+    }, 300);
 }
 
 function openModal(modal) {
     authModalWrapper.style.display = "grid";
+    setTimeout(() => {
+        authModalWrapper.style.opacity = "1";
+    }, 1);
     for (let i = 0; i < modalBoxes.length; i++) {
         const element = modalBoxes[i];
         if (element.classList.contains(modal)) {
