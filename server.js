@@ -23,7 +23,16 @@ const expressWs = require("express-ws")(app);
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, "/html")));
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "/html/index.html"));
+});
+
+app.use(
+    express.static(path.join(__dirname, "/html"), {
+        index: false,
+        extensions: ["html"],
+    })
+);
 app.use(express.static(path.join(__dirname, "/js")));
 app.use(express.static(path.join(__dirname, "/css")));
 

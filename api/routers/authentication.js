@@ -80,7 +80,6 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-    console.log(req.cookies.token);
     res.clearCookie("token");
     return res.sendStatus(200);
 });
