@@ -69,11 +69,10 @@ router.post("/login", (req, res) => {
         }
         let token = jwt.sign(
             { id: user.id, username: user.username, admin: user.admin },
-            config.secret,
-            { expiresIn: 365 * 24 * 60 * 60 }
+            config.secret
         );
         res.cookie("token", token, {
-            maxAge: 365 * 24 * 60 * 60,
+            maxAge: 100 * 365 * 24 * 60 * 60,
             httpOnly: true,
         });
         return res.status(200).send(token);

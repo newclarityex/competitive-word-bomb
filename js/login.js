@@ -15,6 +15,8 @@ function register(username, password, email) {
         body: JSON.stringify(params),
     }).then((res) => {
         if (res.status == 200) {
+            console.log(username);
+            localStorage.setItem("username", username.toLowerCase());
             location.reload();
             return;
         }
@@ -35,6 +37,7 @@ function login(username, password) {
         }),
     }).then((res) => {
         if (res.status == 200) {
+            localStorage.setItem("username", username.toLowerCase());
             location.reload();
             return;
         }
@@ -46,7 +49,7 @@ function logout() {
     fetch("http://localhost:3000/api/logout", {
         method: "post",
     }).then((res) => {
-        console.log(res);
+        localStorage.removeItem("username");
         location.reload();
     });
 }
@@ -93,4 +96,24 @@ function submitRegister(e) {
     let email = registerModal.getElementsByClassName("auth-input")[1].value;
     let password = registerModal.getElementsByClassName("auth-input")[2].value;
     register(username, password, email);
+}
+
+// Set login status
+var username = localStorage.getItem("username");
+if (username) {
+    let usernameSpan = document.getElementsByClassName("navbar-username")[0];
+    usernameSpan.textContent = username;
+    let userDiv = document.getElementsByClassName("navbar-user")[0];
+    userDiv.style.display = "block";
+    setTimeout(() => {
+        userDiv.style.opacity = "1";
+    }, 1);
+} else {
+    let buttonsWrapper = document.getElementsByClassName(
+        "navbar-buttons-wrapper"
+    )[0];
+    buttonsWrapper.style.display = "flex";
+    setTimeout(() => {
+        buttonsWrapper.style.opacity = "1";
+    }, 1);
 }

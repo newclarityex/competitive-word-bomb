@@ -43,6 +43,31 @@ button:hover {
     flex-direction: row;
     justify-content: space-evenly;
     width: 20%;
+    display: none;
+    opacity: 0;
+    transition: 1s;
+}
+
+.navbar-user-info {
+    max-width: 70%;
+    display: block;
+    float: right;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    right: 20px;
+}
+
+.navbar-user {
+    width: 40%;
+    color: #2dd881;
+    font-size: 20px;
+    display: none;
+    opacity: 0;
+    transition: 1s;
+    line-height: 50px;
+    overflow: hidden;
 }
 
 .navlink {
@@ -125,6 +150,18 @@ button:hover {
     padding: 12px;
     font-weight: bold;
     color: white;
+}
+
+.logout-button {
+    background-color: #f87575;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 12px;
+    font-weight: bold;
+    color: white;
+    float: right;
+    margin-right: 24px;
 }
 
 .signup-button {
