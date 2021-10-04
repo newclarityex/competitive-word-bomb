@@ -1,0 +1,127 @@
+.gamemodes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+
+.gamemode.casual {
+    background-color: #912f56;
+    border-radius: 16px;
+    padding: 16px;
+    margin: 18px 0;
+    margin-top: 36px;
+    width: 700px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* color: #ffafc5; */
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.gamemode.competitive {
+    background-color: #527a54;
+    border-radius: 16px;
+    padding: 16px;
+    margin: 18px 0;
+    width: 700px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* color: #b8d4b9; */
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.gamemode-title {
+    margin-left: 20px;
+    width: 40%;
+    color: white;
+}
+
+.gamemode-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+
+.gamemode-desc {
+    margin-top: 4px;
+}
+.gamemode-button {
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    margin-top: 12px;
+    padding: 8px 16px;
+    font-weight: bold;
+    color: white;
+    float: right;
+}
+.gamemode-button.casual {
+    /* background-color: #f487b6; */
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.gamemode-button.competitive {
+    /* background-color: #89c289; */
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.subgamemodes {
+    display: flex;
+    flex-direction: row;
+    width: 732px;
+    justify-content: space-between;
+}
+
+.subgamemode {
+    width: 48%;
+    background-color: #004777;
+    margin: 16px 0px;
+    border-radius: 16px;
+    /* color: #b9e6ff; */
+    display: flex;
+    color: rgba(255, 255, 255, 0.55);
+    flex-direction: column;
+    align-items: center;
+}
+
+.subgamemode-title {
+    text-align: center;
+    margin-bottom: 4px;
+    color: white;
+}
+
+.subgamemode-desc {
+    text-align: center;
+    padding: 0 5%;
+    margin: 8px;
+}
+
+.subgamemode-button {
+    /* background-color: #74bbe0; */
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.body-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-card {
+    width: 40%;
+}
+
+.body-title {
+    color: #3bac72;
+    margin-bottom: 0;
+}
