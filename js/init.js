@@ -1,33 +1,49 @@
 var match;
 
-var joinState = false;
+// sendServer("leaveQueue");
+const leaveQueueBtn = document.getElementById("leave-queue");
+const leaveRoomBtn = document.getElementById("leave-room");
 
-var queueBtn = document.getElementById("queue-button");
-queueBtn.addEventListener("click", () => {
-    if (joinState) {
-        sendServer("leaveQueue");
-        queueBtn.textContent = "Join Queue";
-        joinState = false;
-    } else {
-        sendServer("joinQueue");
-        queueBtn.textContent = "Leave Queue";
-        joinState = true;
+const loadingText = document.getElementsByClassName("finding-player")[0];
+var dots = 0;
+setInterval(() => {
+    loadingText.textContent = "Searching for players";
+    for (let i = 0; i < dots; i++) {
+        loadingText.textContent += ".";
     }
-});
+    dots++;
+    dots = dots % 4;
+}, 1000);
 
-var wordInput = document.getElementById("wordInput");
-
-function submitWord() {
-    var word = wordInput.value;
-    wordInput.value = "";
-    sendServer("submitWord", { roomId: match.options.id, word });
+function joinQueue() {
+    sendServer("joinQueue");
+    leaveQueueBtn.style.display = "block";
+    switchPage("ingame");
+    players = 0;
+    addPlayerDiv(username, true);
+}
+function leaveQueue() {
+    sendServer("leaveQueue");
+    switchPage("main-menu");
+    setTimeout(() => {
+        leaveQueueBtn.style.display = "none";
+        clearPlayers();
+    }, 500);
 }
 
-document.getElementById("wordButton").addEventListener("click", () => {
-    submitWord();
-});
-wordInput.onkeydown = function (e) {
-    if (e.keyCode == 13) {
-        submitWord();
-    }
-};
+// var wordInput = document.getElementById("wordInput");
+
+// function submitWord() {
+//     var word = wordInput.value;
+//     wordInput.value = "";
+//     sendServer("submitWord", { roomId: match.options.id, word });
+// }
+
+// document.getElementById("wordButton").addEventListener("click", () => {
+//     submitWord();
+// });
+// wordInput.onkeydown = function (e) {
+//     if (e.keyCode == 13) {
+//         submitWord();
+//     }
+// };

@@ -30,6 +30,23 @@
     justify-content: space-between;
     /* color: #b8d4b9; */
     color: rgba(255, 255, 255, 0.55);
+    position: relative;
+}
+
+.gamemode-locked {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 16px;
+    place-items: center;
+    font-size: 24px;
+    transition: 0.5s;
+    opacity: 0;
+    display: none;
 }
 
 .gamemode-title {
@@ -110,11 +127,14 @@
     font-weight: bold;
     color: white;
 }
-
-.body-wrapper {
-    display: flex;
+#main-menu {
+    z-index: -2;
+}
+.main-menu-wrapper {
     flex-direction: column;
     align-items: center;
+    display: flex;
+    /* display: none; */
 }
 
 .profile-card {
@@ -124,4 +144,104 @@
 .body-title {
     color: #3bac72;
     margin-bottom: 0;
+}
+
+#ingame {
+    display: none;
+    position: absolute;
+    top: 90px;
+    bottom: 0px;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0;
+    transition: 0.5s;
+}
+.ingame-player {
+    display: none;
+    float: left;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    color: white;
+}
+
+#player1 {
+    background-color: #912f56;
+}
+
+#player2 {
+    background-color: #527a54;
+}
+
+#player3 {
+    background-color: #004777;
+}
+
+#player4 {
+    background-color: #8b912f;
+}
+
+.finding-player {
+    width: 50%;
+    height: 100%;
+    float: left;
+    display: grid;
+    place-items: center;
+    background-color: #b66b89;
+    color: white;
+    font-size: 36px;
+}
+
+.ingame-bomb {
+    position: relative;
+}
+
+.ingame-timer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+}
+
+.ingame-bomb-img {
+    position: relative;
+    top: -17px;
+    left: 23px;
+}
+
+.ingame-lives {
+    font-size: 36px;
+}
+
+.ingame-username {
+    font-size: 36px;
+}
+
+.ingame-input {
+    padding: 8px;
+    font-size: 24px;
+    border-radius: 8px;
+    /* border: ; */
+}
+
+.leave-button {
+    display: none;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: #f87575;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 12px;
+    font-weight: bold;
+    color: white;
+    float: right;
+    margin-right: 24px;
 }

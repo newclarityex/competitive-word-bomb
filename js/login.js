@@ -109,11 +109,18 @@ if (username) {
         userDiv.style.opacity = "1";
     }, 1);
 } else {
+    // Show login buttons
     let buttonsWrapper = document.getElementsByClassName(
         "navbar-buttons-wrapper"
     )[0];
     buttonsWrapper.style.display = "flex";
     setTimeout(() => {
         buttonsWrapper.style.opacity = "1";
+    }, 1);
+
+    // Disable competitive
+    document.getElementById("competitive-locked").style.display = "grid";
+    setTimeout(() => {
+        document.getElementById("competitive-locked").style.opacity = "1";
     }, 1);
 }

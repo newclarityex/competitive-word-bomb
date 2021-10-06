@@ -18,6 +18,8 @@ button:hover {
     width: 100%;
     background-color: #004777;
     padding: 4px 0;
+    height: 83px;
+    z-index: 1;
 }
 
 .logo {
@@ -87,6 +89,7 @@ button:hover {
     place-items: center;
     opacity: 0;
     transition: 0.3s;
+    z-index: 2;
 }
 .modal-outside {
     background-color: rgba(0, 0, 0, 0.3);
@@ -212,4 +215,5 @@ button:hover {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    z-index: 2;
 }
