@@ -5,10 +5,12 @@ const User = require("../../api/models/User");
 class Player {
     constructor(client, player, options) {
         this.client = client;
-        this.identity = player.identity;
+        this.id = player._id;
+        this.username = player.username;
         this.lives = options.startingLives;
         this.remainingTime = options.startingTime;
         this.maxTime = options.maxTime;
+        this.elo = player.elo;
     }
     lostLife(match) {
         this.lives--;
@@ -17,7 +19,7 @@ class Player {
             match.playerLost(this);
             return;
         }
-        match.sendAll("lifeLost", { identity: this.identity });
+        match.sendAll("lifeLost", { identity: this._id });
         match.nextRound();
     }
     startTurn(match) {
@@ -33,7 +35,8 @@ class Player {
         this.remainingTime += addedTime * bonusMultiplier;
         this.remainingTime = parseInt(this.remainingTime);
         match.sendAll("endTurn", {
-            identity: this.identity,
+            player: this._id,
+            time: this.remainingTime,
             addedTime,
             bonusMultiplier,
         });

@@ -227,7 +227,15 @@
     padding: 8px;
     font-size: 24px;
     border-radius: 8px;
-    /* border: ; */
+    border: #b84170 solid 4px;
+    border-style: inset;
+    outline: none;
+}
+.ingame-word {
+    height: 54px;
+    width: 100%;
+    display: grid;
+    place-items: center;
 }
 
 .leave-button {
@@ -244,4 +252,19 @@
     color: white;
     float: right;
     margin-right: 24px;
+}
+#substring {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: #9a348e;
+    color: white;
+    font-size: 36px;
+    opacity: 0;
 }

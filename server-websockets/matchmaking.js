@@ -1,4 +1,4 @@
-const thresholdPerSecond = 10;
+const thresholdPerSecond = 100;
 
 const path = require("path");
 

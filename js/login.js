@@ -15,9 +15,11 @@ function register(username, password, email) {
         body: JSON.stringify(params),
     }).then((res) => {
         if (res.status == 200) {
-            console.log(username);
-            localStorage.setItem("username", username.toLowerCase());
-            location.reload();
+            res.json().then((data) => {
+                localStorage.setItem("username", data.username);
+                localStorage.setItem("id", data.id);
+                location.reload();
+            });
             return;
         }
         res.text().then((data) => alert(data));
@@ -37,8 +39,11 @@ function login(username, password) {
         }),
     }).then((res) => {
         if (res.status == 200) {
-            localStorage.setItem("username", username.toLowerCase());
-            location.reload();
+            res.json().then((data) => {
+                localStorage.setItem("username", data.username);
+                localStorage.setItem("id", data.id);
+                location.reload();
+            });
             return;
         }
         res.text().then((data) => alert(data));
@@ -50,6 +55,7 @@ function logout() {
         method: "post",
     }).then((res) => {
         localStorage.removeItem("username");
+        localStorage.removeItem("id");
         location.reload();
     });
 }
@@ -100,6 +106,7 @@ function submitRegister(e) {
 
 // Set login status
 var username = localStorage.getItem("username");
+var user_id = localStorage.getItem("id");
 if (username) {
     let usernameSpan = document.getElementsByClassName("navbar-username")[0];
     usernameSpan.textContent = username;

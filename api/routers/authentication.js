@@ -39,13 +39,12 @@ router.post("/register", (req, res) => {
                 .status(500)
                 .send("Unable to register user, please try again later.");
         }
-        let token = jwt.sign(
-            { id: user.id, username: user.username, admin: user.admin },
-            process.env.SECRET || config.secret,
-            { expiresIn: 60 * 60 * 24 * 365 }
-        );
+        let data = { id: user.id, username: user.username, admin: user.admin };
+        let token = jwt.sign(data, process.env.SECRET || config.secret, {
+            expiresIn: 60 * 60 * 24 * 365,
+        });
         res.cookie("token", token, { maxAge: 900000, httpOnly: true });
-        return res.status(200).send(token);
+        return res.status(200).send(data);
     });
 });
 
@@ -67,15 +66,13 @@ router.post("/login", (req, res) => {
         if (!user) {
             return res.status(400).send("Invalid credentials.");
         }
-        let token = jwt.sign(
-            { id: user.id, username: user.username, admin: user.admin },
-            config.secret
-        );
+        let data = { id: user.id, username: user.username, admin: user.admin };
+        let token = jwt.sign(data, config.secret);
         res.cookie("token", token, {
             maxAge: 100 * 365 * 24 * 60 * 60,
             httpOnly: true,
         });
-        return res.status(200).send(token);
+        return res.status(200).send(data);
     });
 });
 

@@ -61,14 +61,21 @@ class Match {
         this.usedWords = [];
         this.difficulty = 0;
         this.sendAll("matchData", {
-            players: players.map((player) => player.data.identity),
+            players: JSON.stringify(
+                players.map((player) => {
+                    return {
+                        id: player.data.id,
+                        username: player.data.username,
+                    };
+                })
+            ),
             options: this.options,
         });
         if (this.options.gametype == "ranked") {
             let avgElo = (this.players[0].elo + this.players[1].elo) / 2;
             this.difficulty = this.options.eloDifficulties.find(
                 (bracket) => bracket.min <= avgElo && bracket.max >= avgElo
-            );
+            ).difficulty;
             this.startGame();
         }
     }
@@ -152,9 +159,10 @@ class Match {
 
         let player = this.players[this.currentPlayer];
         this.sendAll("startTurn", {
-            player: player.identity,
+            player: player.id,
             substring: this.substring,
             time: player.remainingTime,
+            currentPlayer: this.currentPlayer,
         });
         this.players[this.currentPlayer].startTurn(this);
     }

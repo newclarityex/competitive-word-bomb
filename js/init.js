@@ -1,5 +1,7 @@
 var match;
+var playerContainer;
 
+const substringDiv = document.getElementById("substring");
 // sendServer("leaveQueue");
 const leaveQueueBtn = document.getElementById("leave-queue");
 const leaveRoomBtn = document.getElementById("leave-room");
@@ -20,7 +22,8 @@ function joinQueue() {
     leaveQueueBtn.style.display = "block";
     switchPage("ingame");
     players = 0;
-    addPlayerDiv(username, true);
+    playerContainer = addPlayerDiv(username, true);
+    console.log(playerContainer);
 }
 function leaveQueue() {
     sendServer("leaveQueue");
@@ -31,19 +34,17 @@ function leaveQueue() {
     }, 500);
 }
 
-// var wordInput = document.getElementById("wordInput");
+let inputs = document.getElementsByClassName("ingame-input");
 
-// function submitWord() {
-//     var word = wordInput.value;
-//     wordInput.value = "";
-//     sendServer("submitWord", { roomId: match.options.id, word });
-// }
-
-// document.getElementById("wordButton").addEventListener("click", () => {
-//     submitWord();
-// });
-// wordInput.onkeydown = function (e) {
-//     if (e.keyCode == 13) {
-//         submitWord();
-//     }
-// };
+for (let i = 0; i < inputs.length; i++) {
+    const input = inputs[i];
+    input.onkeydown = function (e) {
+        if (e.keyCode == 13) {
+            submitWord(input);
+            input.value = "";
+        }
+    };
+}
+function submitWord(word) {
+    sendServer("submitWord", { roomId: match.options.id, word });
+}

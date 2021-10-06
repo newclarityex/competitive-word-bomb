@@ -1,25 +1,77 @@
+function getTimer(id) {
+    return document
+        .getElementById(id)
+        .getElementsByClassName("ingame-timer")[0];
+}
+
+function enableInput() {
+    let input = playerContainer.getElementsByClassName("ingame-input")[0];
+    input.disabled = false;
+    input.focus();
+}
+
+function disableInput() {
+    let input = playerContainer.getElementsByClassName("ingame-input")[0];
+    input.disabled = true;
+    input.value = "";
+}
+
+const colors = ["#912f56", "#527a54", "#004777", "#8b912f"];
+
 class Match {
     constructor(players, options) {
         this.players = players;
         this.options = options;
+        this.currentPlayer = 0;
     }
-    startTurn(player, substring, time) {
-        document.getElementById("substring").textContent = substring;
-        if (player == identity) {
-            console.log("YOUR TURN");
+    startGame() {
+        substringDiv.style.opacity = 1;
+        let num = 3;
+        substringDiv.textContent = num;
+        var countdown = setInterval(() => {
+            if (num == 1) {
+                clearInterval(countdown);
+                return;
+            }
+            num--;
+            substringDiv.textContent = num;
+        }, 1000);
+    }
+    startTurn(player, substring, time, currentPlayer) {
+        if (player == user_id) {
+            enableInput();
+        } else {
+            disableInput();
         }
+
+        // Timer
         clearInterval(this.countdown);
-        document.getElementById("timer").textContent = time + " seconds.";
+        if (this.options.gametype == "ranked") {
+            if (player == user_id) {
+                currentPlayer = 0;
+            } else {
+                currentPlayer = 1;
+            }
+        }
+        this.currentPlayer = currentPlayer;
+        substringDiv.textContent = substring;
+        substringDiv.style.backgroundColor = colors[currentPlayer];
+
+        let timer = getTimer("player" + (currentPlayer + 1));
+        timer.textContent = time;
         let startTime = new Date().getTime();
         let this_ = this;
         this.countdown = setInterval(() => {
             let curTime =
                 time - parseInt((new Date().getTime() - startTime) / 1000);
-            document.getElementById("timer").textContent =
-                Math.max(curTime, 0) + " seconds.";
+            timer.textContent = Math.max(curTime, 0);
             if (curTime <= 0) {
                 clearInterval(this_.countdown);
             }
         }, 1000);
+    }
+    endTurn(player, time) {
+        let timer = getTimer("player" + (this.currentPlayer + 1));
+        timer.textContent = time;
     }
 }
