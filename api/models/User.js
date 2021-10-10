@@ -10,7 +10,7 @@ const User = new Schema({
     email: String,
     status: String,
     admin: {
-        type: Boolean,
+        type: Boolean, // So true bestie
         default: false,
     },
 });

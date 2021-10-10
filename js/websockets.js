@@ -1,5 +1,5 @@
-const port = 3000;
-const socket = new WebSocket("ws://localhost:" + port);
+const port = 80;
+const socket = new WebSocket("ws://localhost:3000");
 
 socket.addEventListener("open", (event) => {
     console.log("Successfully connected!");
