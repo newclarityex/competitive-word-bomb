@@ -20,4 +20,4 @@ router.get("/leaderboard", (req, res) => {
     });
     // load more
 });
-
+module.exports = router;
