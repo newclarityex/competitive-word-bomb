@@ -1,0 +1,25 @@
+.leaderboard{
+    margin-left: 16.5%;
+    margin-right: 16.5%;
+    width: 66%;
+    background-color: #527a54;
+    padding-bottom: 1%;
+}
+.leaderboard-title {
+    color: white;
+    text-align: center;
+}
+.rating-list {
+    margin: 1.5rem;
+    list-style-type: none;
+    width: 90%;
+}
+.first-place {
+    background-color: #CFB53B;
+}
+.second-place {
+    background-color: silver;
+}
+.thrid-place {
+    background-color: #B38A58;
+}
