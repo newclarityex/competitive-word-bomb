@@ -4,9 +4,9 @@ const clientFunctions = {
     },
     matchFound: (payload) => {},
     matchData: (payload) => {
-        console.log(payload.players);
         match = new Match(JSON.parse(payload.players), payload.options);
         if (match.options.gametype == "ranked") {
+            leaveQueueBtn.style.display = "none";
             match.opponent = match.players.find(
                 (player) => player.id != user_id
             );
