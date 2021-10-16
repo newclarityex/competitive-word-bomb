@@ -59,7 +59,7 @@ ul.rating-list > li{
 .rated-name {
     grid-column-start: 2;
     font-size: 3rem;
-    margin-top: .5girem;
+    margin-top: .5rem;
 }
 .rated-elo {
     justify-self: end;
