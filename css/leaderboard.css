@@ -20,6 +20,8 @@ ul.rating-list > li{
     height:  5rem;
     border-radius: 8px;
     margin-bottom: .5rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
 }
 .first-place {
     display: grid;
@@ -53,16 +55,14 @@ ul.rating-list > li{
     grid-column-start:1;
     font-size: 3rem;
     margin-right: .4rem;
-    margin-top: .6rem;
 }
 .rated-name {
     grid-column-start: 2;
     font-size: 3rem;
-    bottom: 0rem;
-    margin-top: .6rem;
+    margin-top: .5girem;
 }
 .rated-elo {
     justify-self: end;
     font-size: 3rem;
-    margin-top: .6rem;
+    margin-top: .5rem;
 }
