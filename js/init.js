@@ -41,10 +41,10 @@ for (let i = 0; i < inputs.length; i++) {
     input.onkeydown = function (e) {
         if (e.keyCode == 13) {
             submitWord(input);
-            input.value = "";
         }
     };
 }
-function submitWord(word) {
-    sendServer("submitWord", { roomId: match.options.id, word });
+function submitWord(input) {
+    sendServer("submitWord", { roomId: match.options.id, word: input.value });
+    input.value = "";
 }

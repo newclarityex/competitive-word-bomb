@@ -200,6 +200,9 @@ class Match {
         return [modifiedAddedTime, bonusMultiplier];
     }
     submitWord(client, word, substring) {
+        if (!word) {
+            return;
+        }
         word = word.toLowerCase();
         let player = this.players[this.currentPlayer];
         if (client != player.client) {
