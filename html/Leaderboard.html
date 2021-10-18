@@ -12,6 +12,7 @@
     <script defer src="init.js"></script>
     <script defer src="Match.js"></script>
     <script defer src="Player.js"></script>
+    <script defer src="clientboard.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
@@ -79,28 +80,17 @@
     </div>
     <div class="leaderboard">
         <h1 class="leaderboard-title"> Player Leaderboard </h1>
-        <ul class="rating-list">
-             <li class="first-place">
-                <span class="rating">1<sup>st</sup></span>
-                <span class="rated-name"> WoWCoolname69 </span>
-                <span class="rated-elo"> 2500 </span>
-            </li>
-            <li class="second-place">
-                  <span class="rating"> 2<sup>nd</sup></span>
-                  <span class="rated-name"> name </span>
-                  <span class="rated-elo"> elo </span>
-            </li>
-            <li class="thrid-place">
-                <span class="rating"> 3<sup>rd</sup></span>
-                <span class="rated-name"> name </span>
-                <span class="rated-elo"> elo </span>
-            </li>
-            <li class="nth-place">
-                <span class="rating"> n<sup>th</sup></span>
-                <span class="rated-name"> name </span>
-                <span class="rated-elo"> elo </span>
-            </li>
+        <ul class="rating-list" id="rating-list">
+            <!--templates go here-->
         </ul>
     </div>
+    <template>
+        <li class="rating-item">
+            <span class="rating"> </span>
+            <span class="suptext"><sub> </sub></span>
+            <span class="rated-name"> </span>
+            <span class="rated-elo"> </span>
+        </li>
+    </template>
 </body>
 </html>
