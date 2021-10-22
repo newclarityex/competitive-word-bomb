@@ -14,6 +14,11 @@ function addPlayerDiv(username, isSelf) {
     if (players > 1) {
         loadingText.style.display = "none";
     }
+    if (ranked) {
+        player.getElementsByClassName("ingame-elo")[0].style.display = "block";
+    } else {
+        player.getElementsByClassName("ingame-elo")[0].style.display = "none";
+    }
     return player;
 }
 
@@ -23,5 +28,5 @@ function clearPlayers() {
         const element = players[i];
         element.style.display = "none";
     }
-    loadingText.style.display = "block";
+    loadingText.style.display = "grid";
 }

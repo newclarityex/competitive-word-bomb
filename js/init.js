@@ -17,15 +17,18 @@ setInterval(() => {
     dots = dots % 4;
 }, 1000);
 
+var ranked;
+
 function joinQueue() {
+    ranked = true
     sendServer("joinQueue");
     leaveQueueBtn.style.display = "block";
     switchPage("ingame");
     players = 0;
     playerContainer = addPlayerDiv(username, true);
-    console.log(playerContainer);
 }
 function leaveQueue() {
+    ranked = false
     sendServer("leaveQueue");
     switchPage("main-menu");
     setTimeout(() => {

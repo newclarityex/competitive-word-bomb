@@ -220,7 +220,10 @@
 }
 
 .ingame-username {
-    font-size: 36px;
+    font-size: 44px;
+}
+.ingame-elo {
+    font-size: 28px;
 }
 
 .ingame-input {
@@ -237,7 +240,6 @@
     display: grid;
     place-items: center;
 }
-
 .leave-button {
     display: none;
     position: absolute;
