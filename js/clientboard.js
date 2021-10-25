@@ -1,31 +1,51 @@
-fetch('/api/leaderboard').then(response => response.json()).then(data => listmaker(data));
+var skip = 0;
 var raitinglist = document.getElementById("rating-list")
-function listmaker(data) {
+
+getLeaderboard();
+
+function listMaker(data) {
     for (var i = 0; i < data.length; i++) {
         rankingSlotMaker(i, data[i].username, data[i].elo);
     }
+    skip += data.length;
+    window.onscroll = function() {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            getLeaderboard();
+        }
+    };
 }
 function rankingSlotMaker(listpos, name, elo){
+    listpos += skip;
     var temp = document.getElementsByTagName("template")[0];
     var clone = temp.content.firstElementChild.cloneNode(true);
-    var spans = clone.querySelectorAll("span");
-    var suptext = spans[1].querySelectorAll("sub");
+
+    var placment = clone.getElementsByClassName("placement")[0];
+    var nameTag = clone.getElementsByClassName("rated-name")[0];
+    var eloTag = clone.getElementsByClassName("rated-elo")[0];
+    var suptext = clone.getElementsByClassName("suptext")[0];
+
     clone.classList.add(classgiver(listpos))
-    suptext[0].innerText = superscriptMaker(listpos + 1);
-    spans[0].innerText = listpos + 1;
-    spans[2].innerText = name;
-    spans[3].innerText = elo;
+    suptext.innerText = superscriptMaker(listpos + 1);
+    placment.innerText = listpos + 1;
+    nameTag.innerText = name;
+    eloTag.innerText = elo;
     raitinglist.appendChild(clone);
 }
+function getLeaderboard() {
+    window.onscroll = ''
+    fetch(`/api/leaderboard?skip=${skip}`).then(response => response.json()).then(data => listMaker(data));
+}
 function superscriptMaker(number){
-    number = Math.floor((number / Math.pow(10, 1 - 1)) % 10); // this returns the first digit of a number
-    if (number === 1) {
+    if ((number % 100) - number % 10 === 10) {
+        return "th";
+    }
+    else if (number % 10 === 1) {
         return "st";
     }
-    else if (number === 2) {
+    else if (number % 10 === 2) {
         return "nd";
     }
-    else if (number === 3) {
+    else if (number % 10 === 3) {
         return "rd";
     }
     else {

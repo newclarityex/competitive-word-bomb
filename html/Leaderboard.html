@@ -26,6 +26,7 @@
         <h1 class="logo">Word Bomb</h1>
         <div class="navbar-navlink-wrapper">
             <a class="navlink" href="/">Play</a>
+            <a class="navlink" href="/leaderboard">Leaderboard</a>
             <a class="navlink" href="https://discord.gg/euuHhuFRBd" target="_blank">Discord</a>
             <a class="navlink active" href="/about">About</a>
         </div>
@@ -86,10 +87,12 @@
     </div>
     <template>
         <li class="rating-item">
-            <span class="rating"> </span>
-            <span class="suptext"><sub> </sub></span>
-            <span class="rated-name"> </span>
-            <span class="rated-elo"> </span>
+            <div class="placement-wrapper"> 
+                <span class="placement"> </span>
+                <sup class="suptext"> </sup>
+                <div class="rated-name"> </div>
+            </div>
+            <div class="rated-elo"> </div>
         </li>
     </template>
 </body>

@@ -1,3 +1,4 @@
+const { number, string } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
@@ -13,6 +14,23 @@ const User = new Schema({
         type: Boolean, // So true bestie
         default: false,
     },
+    dateJoined: {
+        type: Date,
+        defualt: Date.now
+    },
+    gamesWon: {
+        type: Number,
+        defualt: 0
+    },
+    gamesLost: {
+        type: Number,
+        defualt: 0
+    },
+    lastSeen: {
+      type: Date,
+      defualt: Date.now  
+    },
+    bio: String
 });
 
 User.plugin(passportLocalMongoose);
