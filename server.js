@@ -71,6 +71,13 @@ const authenticationRouter = require(path.join(
 ));
 app.use("/api", authenticationRouter);
 
+const leaderboardRouter = require(path.join(
+    __dirname,
+    "/api/routers/leaderboard"
+));
+app.use("/api", leaderboardRouter);
+
+
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
 });

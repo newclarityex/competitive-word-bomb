@@ -1,0 +1,68 @@
+.leaderboard{
+    margin-left: 16.5%;
+    margin-right: 16.5%;
+    width: 66%;
+    background-color: #527a54;
+    padding-bottom: 1%;
+    padding-top: 2%;
+    border-radius: 2rem;
+    margin-top: 3rem;
+}
+.leaderboard-title {
+    color: white;
+    text-align: center;
+    font-size: 5rem;
+    margin: 0;
+}
+.rating-list {
+    list-style-type: none;
+    width: 95%;
+    padding: 0px;
+    margin-left: 2.5%;
+    margin-right: 2.5;
+}
+.rating-item {
+    display: grid;
+    grid-template-columns: 75% 25%;
+    height:  5rem;
+    border-radius: 1rem;
+    margin-bottom: .5rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
+.first-place {
+    background-color: #CFB53B;
+}
+.second-place {
+    background-color: silver;
+}
+.third-place {
+    background-color: #B38A58;
+}
+.nth-place {
+    background-color: thistle;
+}
+.placement-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.placement {
+    font-size: 3rem;
+}
+.suptext {
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+.rated-name {
+    display: flex;
+    align-items: center;
+    font-size: 3rem;
+    padding-left: 1.5rem;
+}
+.rated-elo {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    font-size: 3rem;
+}
