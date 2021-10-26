@@ -125,7 +125,7 @@ class Match {
         }
         player1.setElo(player1Elo);
         player2.setElo(player2Elo);
-        return Math.abs(player1Elo - player2Elo)
+        return parseInt(Math.abs(player1Elo - player2Elo) / 2)
     }
     checkRemainingPlayers() {
         // If there are more than 1 remaining players, return true.
