@@ -10,7 +10,7 @@ const clientFunctions = {
             match.opponent = match.players.find(
                 (player) => player.id != user_id
             );
-            addPlayerDiv(match.opponent.username, false);
+            addPlayerDiv(match.opponent.username, false, match.opponent.elo);
         }
     },
     startGame: (payload) => {

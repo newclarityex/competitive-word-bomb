@@ -66,6 +66,7 @@ class Match {
                     return {
                         id: player.data.id,
                         username: player.data.username,
+                        elo: player.data.elo
                     };
                 })
             ),

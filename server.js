@@ -64,12 +64,21 @@ app.ws("/", function (ws, req) {
     });
 });
 
+
 app.use("/api/", apiLimiter);
+
 const authenticationRouter = require(path.join(
     __dirname,
     "/api/routers/authentication"
 ));
 app.use("/api", authenticationRouter);
+
+const userDataRouter = require(path.join(
+    __dirname,
+    "/api/routers/userData"
+));
+app.use("/api", userDataRouter);
+
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

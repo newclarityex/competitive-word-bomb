@@ -1,5 +1,5 @@
 var players = 0;
-function addPlayerDiv(username, isSelf) {
+function addPlayerDiv(username, isSelf, elo) {
     let curplayer = players + 1;
     let player = document.getElementById("player" + curplayer);
     player.style.display = "flex";
@@ -15,6 +15,7 @@ function addPlayerDiv(username, isSelf) {
         loadingText.style.display = "none";
     }
     if (ranked) {
+        player.getElementsByClassName("ingame-elo")[0].textContent = `${elo} ELO`
         player.getElementsByClassName("ingame-elo")[0].style.display = "block";
     } else {
         player.getElementsByClassName("ingame-elo")[0].style.display = "none";

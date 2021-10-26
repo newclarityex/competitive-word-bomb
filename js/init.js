@@ -25,7 +25,7 @@ function joinQueue() {
     leaveQueueBtn.style.display = "block";
     switchPage("ingame");
     players = 0;
-    playerContainer = addPlayerDiv(username, true);
+    playerContainer = addPlayerDiv(username, true, userData.elo);
 }
 function leaveQueue() {
     ranked = false
