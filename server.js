@@ -16,7 +16,7 @@ const apiLimiter = rateLimit({
     max: 100,
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 const app = express();
 const expressWs = require("express-ws")(app);
 
