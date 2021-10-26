@@ -7,7 +7,7 @@ function register(username, password, email) {
     if (email) {
         params.email = email;
     }
-    fetch("http://localhost:3000/api/register", {
+    fetch(`http://localhost:${port}/api/register`, {
         method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -28,7 +28,7 @@ function register(username, password, email) {
 }
 
 function login(username, password) {
-    fetch("http://localhost:3000/api/login", {
+    fetch(`http://localhost:${port}/api/login`, {
         method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -52,7 +52,7 @@ function login(username, password) {
 }
 
 function logout() {
-    fetch("http://localhost:3000/api/logout", {
+    fetch(`http://localhost:${port}/api/logout`, {
         method: "post",
     }).then((res) => {
         localStorage.removeItem("username");
