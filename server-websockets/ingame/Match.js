@@ -123,9 +123,10 @@ class Match {
                 player1Data.elo
             );
         }
+        let eloDiff = player1Data.elo - player1Elo
         player1.setElo(player1Elo);
         player2.setElo(player2Elo);
-        return parseInt(Math.abs(player1Elo - player2Elo) / 2)
+        return parseInt(eloDiff)
     }
     checkRemainingPlayers() {
         // If there are more than 1 remaining players, return true.
