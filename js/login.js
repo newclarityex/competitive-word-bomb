@@ -139,7 +139,7 @@ if (username) {
 }
 
 function updateUserData() {
-    fetch(`http://localhost:3000/api/user?username=${username}`).then((res) => {
+    fetch(`/api/user?username=${username}`).then((res) => {
         if (res.status == 200) {
             res.json().then((data) => {
                 userData = data
