@@ -139,6 +139,9 @@ function updateUserData() {
         if (res.status == 200) {
             res.json().then((data) => {
                 userData = data
+                if (userDataReady) {
+                    userDataReady()
+                }
             });
             return;
         }

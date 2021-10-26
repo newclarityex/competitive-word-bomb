@@ -66,7 +66,8 @@ class Match {
                     return {
                         id: player.data.id,
                         username: player.data.username,
-                        elo: player.data.elo
+                        elo: player.data.elo,
+                        lives: this.options.startingLives
                     };
                 })
             ),
@@ -87,15 +88,16 @@ class Match {
         }
     }
     playerLost(player) {
-        this.sendAll("lostLife", player.identity);
-        this.nextRound();
+        this.sendAll("lostLife", player.id);
+        this.nextRound(true);
     }
     gameOver(winner) {
         console.log("GAME OVER");
-        this.sendAll("gameOver", { winner: winner.identity });
+        let payload = { winner: winner.id }
         if (this.options.gametype == "ranked") {
-            this.calculateElo();
+            payload.eloDiff = this.calculateElo();
         }
+        this.sendAll("gameOver", payload);
     }
     calculateElo() {
         let player1 = this.players[0];
@@ -123,6 +125,7 @@ class Match {
         }
         player1.setElo(player1Elo);
         player2.setElo(player2Elo);
+        return Math.abs(player1Elo - player2Elo)
     }
     checkRemainingPlayers() {
         // If there are more than 1 remaining players, return true.
@@ -141,7 +144,7 @@ class Match {
         this.difficulty++;
         this.sendAll("difficultyUp", {});
     }
-    nextRound() {
+    nextRound(repeatWord) {
         if (!this.checkRemainingPlayers()) {
             this.gameOver(this.players.find((player) => player.lives != 0));
             return;
@@ -155,8 +158,10 @@ class Match {
             this.updateDifficulty();
         }
 
-        let wordFrequencyRange = this.options.difficultyRanges[this.difficulty];
-        this.substring = getSubstring(wordFrequencyRange);
+        if (!repeatWord) {
+            let wordFrequencyRange = this.options.difficultyRanges[this.difficulty];
+            this.substring = getSubstring(wordFrequencyRange);
+        }
 
         let player = this.players[this.currentPlayer];
         this.sendAll("startTurn", {
@@ -171,7 +176,7 @@ class Match {
         this.started = true;
         this.sendAll("startGame", { roomId: this.options.id });
         setTimeout(() => {
-            this.nextRound();
+            this.nextRound(false);
         }, 3000);
     }
     calculateTime(word) {
@@ -201,6 +206,9 @@ class Match {
         return [modifiedAddedTime, bonusMultiplier];
     }
     submitWord(client, word, substring) {
+        if (!word) {
+            return;
+        }
         word = word.toLowerCase();
         let player = this.players[this.currentPlayer];
         if (client != player.client) {

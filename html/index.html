@@ -90,12 +90,13 @@
                         <span class="gamemode-desc">Join an unrated casual game.</span>
                         <button class="gamemode-button casual" onclick="joinCasual()">Play</button>
                     </div>
+                    <div class="gamemode-locked" id="casual-locked">Coming soon...</div>
                 </div>
                 <div class="gamemode competitive">
                     <h1 class="gamemode-title">Competitive</h1>
                     <div class="gamemode-info">
                         <span class="gamemode-desc">Match with other skilled players and rank up.</span>
-                        <button class="gamemode-button competitive" onclick="joinQueue()">Play</button>
+                        <button class="gamemode-button competitive" onclick="joinQueue()" disabled>Play</button>
                     </div>
                     <div class="gamemode-locked" id="competitive-locked">Login or sign up to join competitive
                         matchmaking!</div>
@@ -105,11 +106,13 @@
                         <h2 class="subgamemode-title">Custom Games</h2>
                         <p class="subgamemode-desc">Create or join a custom game to play with friends.</p>
                         <button class="subgamemode-button">Play</button>
+                        <div class="gamemode-locked" id="custom-locked">Coming soon...</div>
                     </div>
                     <div class="subgamemode">
                         <h2 class="subgamemode-title">Practice</h2>
                         <p class="subgamemode-desc">Practice in a singleplayer lobby with hints enabled.</p>
                         <button class="subgamemode-button">Play</button>
+                        <div class="gamemode-locked" id="practice-locked">Coming soon...</div>
                     </div>
                 </div>
             </div>
@@ -117,7 +120,7 @@
     </div>
     <div id="ingame">
         <button class="leave-button" id="leave-queue" onclick="leaveQueue()">Leave Queue</button>
-        <button class="leave-button" id="leave-room">Leave Room</button>
+        <button class="leave-button" id="leave-room" onclick="leaveRoom()">Leave Room</button>
         <div class="ingame-player one" id="player1">
             <div class="ingame-lives">❤️❤️❤️</div>
             <div class="ingame-username">Username</div>

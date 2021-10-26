@@ -20,11 +20,12 @@ const colors = ["#912f56", "#527a54", "#004777", "#8b912f"];
 
 class Match {
     constructor(players, options) {
-        this.players = players;
+        this.players = JSON.parse(players).map(player => new Player(player));
         this.options = options;
         this.currentPlayer = 0;
     }
     startGame() {
+        substringDiv.style.backgroundColor = "#9a348e"
         substringDiv.style.opacity = 1;
         let num = 3;
         substringDiv.textContent = num;
@@ -58,12 +59,12 @@ class Match {
         substringDiv.style.backgroundColor = colors[currentPlayer];
 
         let timer = getTimer("player" + (currentPlayer + 1));
-        timer.textContent = time;
+        timer.textContent = time - 1;
         let startTime = new Date().getTime();
         let this_ = this;
         this.countdown = setInterval(() => {
             let curTime =
-                time - parseInt((new Date().getTime() - startTime) / 1000);
+                time - parseInt((new Date().getTime() - startTime) / 1000) - 1;
             timer.textContent = Math.max(curTime, 0);
             if (curTime <= 0) {
                 clearInterval(this_.countdown);
@@ -73,5 +74,35 @@ class Match {
     endTurn(player, time) {
         let timer = getTimer("player" + (this.currentPlayer + 1));
         timer.textContent = time;
+    }
+    removeLife(id) {
+        let player = this.players.find(player => player.id == id)
+        player.lives--;
+        player.updateLives()
+        console.log("lives updated");
+    }
+    gameOver(payload) {
+        disableInput();
+
+        substringDiv.style.opacity = 0;
+
+        if (ranked) {
+            let winner = this.players.find(player => player.id == payload.winner)
+            let loser = this.players.find(player => player.id != payload.winner)
+
+            loser.lives = 0
+            loser.updateLives()
+
+            let winnerEloElement = winner.element.getElementsByClassName("ingame-elo")[0]
+            let loserEloElement = loser.element.getElementsByClassName("ingame-elo")[0]
+
+            winnerEloElement.style.color = "lightgreen"
+            loserEloElement.style.color = "#ff6169"
+
+            winnerEloElement.textContent = `${winner.elo + payload.eloDiff} ELO (+${payload.eloDiff})`
+            loserEloElement.textContent = `${loser.elo - payload.eloDiff} ELO (-${payload.eloDiff})`
+        }
+        
+        leaveRoomBtn.style.display = "block";
     }
 }

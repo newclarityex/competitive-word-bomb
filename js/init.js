@@ -37,13 +37,23 @@ function leaveQueue() {
     }, 500);
 }
 
+function leaveRoom() {
+    ranked = false
+    sendServer("leaveRoom");
+    switchPage("main-menu");
+    setTimeout(() => {
+        leaveRoomBtn.style.display = "none";
+        clearPlayers();
+    }, 500);
+}
+
 let inputs = document.getElementsByClassName("ingame-input");
 
 for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i];
     input.onkeydown = function (e) {
         if (e.keyCode == 13) {
-            submitWord(input);
+            submitWord(input.value);
             input.value = "";
         }
     };

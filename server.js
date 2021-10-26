@@ -41,6 +41,13 @@ const serverFunctions = require(path.join(
     "./server-websockets/serverFunctions"
 ));
 
+
+const userDataRouter = require(path.join(
+    __dirname,
+    "/api/routers/userData"
+));
+app.use("/api", userDataRouter);
+
 const authorizationMiddleware = require(path.join(
     __dirname,
     "/api/middleware/authorization"
@@ -56,6 +63,11 @@ app.ws("/", function (ws, req) {
             data = JSON.parse(data);
         } catch (error) {
             sendClient(ws, "console", "Invalid socket request.");
+            return
+        }
+        if (!(data.type in serverFunctions)) {
+            sendClient(ws, "console", "Invalid socket request.");
+            return
         }
         serverFunctions[data.type](ws, data.payload);
     });
@@ -73,11 +85,6 @@ const authenticationRouter = require(path.join(
 ));
 app.use("/api", authenticationRouter);
 
-const userDataRouter = require(path.join(
-    __dirname,
-    "/api/routers/userData"
-));
-app.use("/api", userDataRouter);
 
 
 app.listen(port, () => {

@@ -14,6 +14,9 @@ function addPlayerDiv(username, isSelf, elo) {
     if (players > 1) {
         loadingText.style.display = "none";
     }
+    player.getElementsByClassName("ingame-timer")[0].textContent = "";
+    player.getElementsByClassName("ingame-lives")[0].textContent = "";
+    player.getElementsByClassName("ingame-elo")[0].style.color = "white";
     if (ranked) {
         player.getElementsByClassName("ingame-elo")[0].textContent = `${elo} ELO`
         player.getElementsByClassName("ingame-elo")[0].style.display = "block";
