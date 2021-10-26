@@ -7,11 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Words and Nukes</title>
     <script defer src="login.js"></script>
+    <script defer src="clientFunctions.js"></script>
+    <script defer src="websockets.js"></script>
+    <script defer src="init.js"></script>
+    <script defer src="Match.js"></script>
+    <script defer src="Player.js"></script>
+    <script defer src="clientboard.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="leaderboard.css">
 </head>
 
 <body>
@@ -72,7 +79,21 @@
             </div>
         </form>
     </div>
-    <h1>Coming soon...</h1>
+    <div class="leaderboard">
+        <h1 class="leaderboard-title"> Player Leaderboard </h1>
+        <ul class="rating-list" id="rating-list">
+            <!--templates go here-->
+        </ul>
+    </div>
+    <template>
+        <li class="rating-item">
+            <div class="placement-wrapper"> 
+                <span class="placement"> </span>
+                <sup class="suptext"> </sup>
+                <div class="rated-name"> </div>
+            </div>
+            <div class="rated-elo"> </div>
+        </li>
+    </template>
 </body>
-
 </html>

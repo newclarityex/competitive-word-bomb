@@ -58,6 +58,7 @@ for (let i = 0; i < inputs.length; i++) {
         }
     };
 }
-function submitWord(word) {
-    sendServer("submitWord", { roomId: match.options.id, word });
+function submitWord(input) {
+    sendServer("submitWord", { roomId: match.options.id, word: input.value });
+    input.value = "";
 }

@@ -1,3 +1,4 @@
+//
 function register(username, password, email) {
     let params = {
         username,

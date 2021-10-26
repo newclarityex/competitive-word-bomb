@@ -1,4 +1,4 @@
-const port = 3000;
+const port = 80;
 const socket = new WebSocket("ws://localhost:" + port);
 
 socket.addEventListener("open", (event) => {
