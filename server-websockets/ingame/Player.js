@@ -19,8 +19,8 @@ class Player {
             match.playerLost(this);
             return;
         }
-        match.sendAll("lifeLost", { identity: this._id });
-        match.nextRound();
+        match.sendAll("lifeLost", { id: this.id });
+        match.nextRound(true);
     }
     startTurn(match) {
         this.startTime = new Date().getTime();
@@ -40,7 +40,7 @@ class Player {
             addedTime,
             bonusMultiplier,
         });
-        match.nextRound();
+        match.nextRound(false);
     }
     setElo(elo) {
         User.findByIdAndUpdate(this.client.user._id, { elo }, (err) => {

@@ -1,5 +1,5 @@
 var players = 0;
-function addPlayerDiv(username, isSelf) {
+function addPlayerDiv(username, isSelf, elo) {
     let curplayer = players + 1;
     let player = document.getElementById("player" + curplayer);
     player.style.display = "flex";
@@ -14,6 +14,15 @@ function addPlayerDiv(username, isSelf) {
     if (players > 1) {
         loadingText.style.display = "none";
     }
+    player.getElementsByClassName("ingame-timer")[0].textContent = "";
+    player.getElementsByClassName("ingame-lives")[0].textContent = "";
+    player.getElementsByClassName("ingame-elo")[0].style.color = "white";
+    if (ranked) {
+        player.getElementsByClassName("ingame-elo")[0].textContent = `${elo} ELO`
+        player.getElementsByClassName("ingame-elo")[0].style.display = "block";
+    } else {
+        player.getElementsByClassName("ingame-elo")[0].style.display = "none";
+    }
     return player;
 }
 
@@ -23,5 +32,5 @@ function clearPlayers() {
         const element = players[i];
         element.style.display = "none";
     }
-    loadingText.style.display = "block";
+    loadingText.style.display = "grid";
 }

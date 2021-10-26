@@ -17,19 +17,32 @@ setInterval(() => {
     dots = dots % 4;
 }, 1000);
 
+var ranked;
+
 function joinQueue() {
+    ranked = true
     sendServer("joinQueue");
     leaveQueueBtn.style.display = "block";
     switchPage("ingame");
     players = 0;
-    playerContainer = addPlayerDiv(username, true);
-    console.log(playerContainer);
+    playerContainer = addPlayerDiv(username, true, userData.elo);
 }
 function leaveQueue() {
+    ranked = false
     sendServer("leaveQueue");
     switchPage("main-menu");
     setTimeout(() => {
         leaveQueueBtn.style.display = "none";
+        clearPlayers();
+    }, 500);
+}
+
+function leaveRoom() {
+    ranked = false
+    sendServer("leaveRoom");
+    switchPage("main-menu");
+    setTimeout(() => {
+        leaveRoomBtn.style.display = "none";
         clearPlayers();
     }, 500);
 }
@@ -40,7 +53,8 @@ for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i];
     input.onkeydown = function (e) {
         if (e.keyCode == 13) {
-            submitWord(input);
+            submitWord(input.value);
+            input.value = "";
         }
     };
 }

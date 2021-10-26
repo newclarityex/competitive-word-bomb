@@ -62,11 +62,10 @@ module.exports = {
             sendClient(client, "console", "Guests cannot queue matchmaking!");
             return;
         }
-        let player = client.user;
-        queue = queue.filter(
-            (queuedPlayer) => queuedPlayer.data._id != player._id
-        );
-        setStatus(player, "online");
+        let player = removeQueue(queue, client)
+        if (player) {
+            setStatus(player, "online");
+        }
         sendClient(client, "console", "Leave queue." + queueList(queue));
     },
     editWord(client, payload) {

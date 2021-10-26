@@ -106,9 +106,11 @@ function submitRegister(e) {
 }
 
 // Set login status
+var userData
 var username = localStorage.getItem("username");
 var user_id = localStorage.getItem("id");
 if (username) {
+    updateUserData();
     let usernameSpan = document.getElementsByClassName("navbar-username")[0];
     usernameSpan.textContent = username;
     let userDiv = document.getElementsByClassName("navbar-user")[0];
@@ -131,4 +133,18 @@ if (username) {
     setTimeout(() => {
         document.getElementById("competitive-locked").style.opacity = "1";
     }, 1);
+}
+
+function updateUserData() {
+    fetch(`http://localhost:3000/api/user?username=${username}`).then((res) => {
+        if (res.status == 200) {
+            res.json().then((data) => {
+                userData = data
+                if (userDataReady) {
+                    userDataReady()
+                }
+            });
+            return;
+        }
+    });
 }

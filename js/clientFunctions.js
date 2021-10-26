@@ -4,13 +4,22 @@ const clientFunctions = {
     },
     matchFound: (payload) => {},
     matchData: (payload) => {
-        console.log(payload.players);
-        match = new Match(JSON.parse(payload.players), payload.options);
+        match = new Match(payload.players, payload.options);
         if (match.options.gametype == "ranked") {
+            leaveQueueBtn.style.display = "none";
             match.opponent = match.players.find(
                 (player) => player.id != user_id
             );
-            addPlayerDiv(match.opponent.username, false);
+            let element = addPlayerDiv(match.opponent.username, false, match.opponent.elo);
+            match.opponent.element = element
+            
+            match.self = match.players.find(
+                (player) => player.id == user_id
+            );
+            match.self.element = playerContainer
+
+            match.opponent.updateLives();
+            match.self.updateLives();
         }
     },
     startGame: (payload) => {
@@ -27,4 +36,10 @@ const clientFunctions = {
     endTurn: (payload) => {
         match.endTurn(payload.player, payload.time);
     },
+    lifeLost: (payload) => {
+        match.removeLife(payload.id)
+    },
+    gameOver: (payload) => {
+        match.gameOver(payload)
+    }
 };
