@@ -7,7 +7,7 @@ function register(username, password, email) {
     if (email) {
         params.email = email;
     }
-    fetch(`http://localhost:${port}/api/register`, {
+    fetch(`/api/register`, {
         method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -28,7 +28,7 @@ function register(username, password, email) {
 }
 
 function login(username, password) {
-    fetch(`http://localhost:${port}/api/login`, {
+    fetch(`/api/login`, {
         method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -52,7 +52,7 @@ function login(username, password) {
 }
 
 function logout() {
-    fetch(`http://localhost:${port}/api/logout`, {
+    fetch(`/api/logout`, {
         method: "post",
     }).then((res) => {
         localStorage.removeItem("username");
@@ -129,10 +129,13 @@ if (username) {
     }, 1);
 
     // Disable competitive
-    document.getElementById("competitive-locked").style.display = "grid";
-    setTimeout(() => {
-        document.getElementById("competitive-locked").style.opacity = "1";
-    }, 1);
+    try {
+        document.getElementById("competitive-locked").style.display = "grid";
+        setTimeout(() => {
+            document.getElementById("competitive-locked").style.opacity = "1";
+        }, 1);
+    } catch (error) {
+    }
 }
 
 function updateUserData() {
