@@ -101,6 +101,12 @@ class Match {
 
             winnerEloElement.textContent = `${winner.elo + payload.eloDiff} ELO (+${payload.eloDiff})`
             loserEloElement.textContent = `${loser.elo - payload.eloDiff} ELO (-${payload.eloDiff})`
+
+            if (winner.id == this.self.id) {
+                userData.elo = winner.elo + payload.eloDiff
+            } else {
+                userData.elo = loser.elo - payload.eloDiff
+            }
         }
         
         leaveRoomBtn.style.display = "block";
