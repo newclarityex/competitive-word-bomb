@@ -60,7 +60,7 @@ class Match {
         this.id = this.options.id;
         this.substring = "";
         this.usedWords = [];
-        this.difficulty = 0;
+        this.resetDifficulty()
         this.sendAll("matchData", {
             players: JSON.stringify(
                 players.map((player) => {
@@ -75,11 +75,17 @@ class Match {
             options: this.options,
         });
         if (this.options.gametype == "ranked") {
+            this.startGame();
+        }
+    }
+    resetDifficulty() {
+        if (this.options.gametype == "ranked") {
             let avgElo = (this.players[0].elo + this.players[1].elo) / 2;
             this.difficulty = this.options.eloDifficulties.find(
                 (bracket) => bracket.min <= avgElo && bracket.max >= avgElo
             ).difficulty;
-            this.startGame();
+        } else {
+            this.difficulty = 0;
         }
     }
     sendAll(type, payload) {
@@ -156,7 +162,7 @@ class Match {
 
         this.round++;
 
-        if (this.round % this.options.difficultyUpFrequency == 0) {
+        if (this.combo % this.options.difficultyUpFrequency == 0) {
             this.updateDifficulty();
         }
 
@@ -166,6 +172,8 @@ class Match {
             this.substring = getSubstring(wordFrequencyRange);
         } else {
             this.consecutiveFails++
+            this.combo = 0;
+            this.resetDifficulty()
         }
 
         let player = this.players[this.currentPlayer];
