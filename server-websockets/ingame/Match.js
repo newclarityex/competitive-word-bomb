@@ -55,6 +55,7 @@ class Match {
         );
         this.round = 0;
         this.combo = 0;
+        this.consecutiveFails = 0;
         this.currentPlayer = 0;
         this.id = this.options.id;
         this.substring = "";
@@ -159,9 +160,12 @@ class Match {
             this.updateDifficulty();
         }
 
-        if (!repeatWord) {
+        if (!repeatWord || this.consecutiveFails >= this.players.length - 1) {
+            this.consecutiveFails = 0;
             let wordFrequencyRange = this.options.difficultyRanges[this.difficulty];
             this.substring = getSubstring(wordFrequencyRange);
+        } else {
+            this.consecutiveFails++
         }
 
         let player = this.players[this.currentPlayer];

@@ -43,6 +43,7 @@ class Match {
             enableInput();
         } else {
             disableInput();
+            this.players[currentPlayer].updateWord("")
         }
 
         // Timer

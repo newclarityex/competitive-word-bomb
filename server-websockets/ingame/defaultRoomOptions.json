@@ -20,13 +20,13 @@
         {"min": 2100, "max": 10000, "difficulty" : 4}
     ],
     "startingLives": 3,
-    "startingTime": 20,
+    "startingTime": 10,
     "maxTime": 5,
-    "minTime": 1,
+    "minTime": 3,
     "timeMarginStart": 4,
     "timeMarginScale": 1,
     "lengthBonusStart": 8,
     "lengthBonusEnd": 14,
-    "lengthBonusMin": 1,
-    "lengthBonusMax": 2
+    "lengthBonusMin": 2,
+    "lengthBonusMax": 4
 }
