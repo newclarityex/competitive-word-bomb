@@ -1,5 +1,6 @@
 var players = 0;
 function addPlayerDiv(username, isSelf, elo) {
+    console.log("Adding player: " + username);
     let curplayer = players + 1;
     let player = document.getElementById("player" + curplayer);
     player.style.display = "flex";
@@ -19,7 +20,9 @@ function addPlayerDiv(username, isSelf, elo) {
     player.getElementsByClassName("ingame-lives")[0].textContent = "";
     player.getElementsByClassName("ingame-elo")[0].style.color = "white";
     if (ranked) {
-        player.getElementsByClassName("ingame-elo")[0].textContent = `${elo} ELO`
+        player.getElementsByClassName(
+            "ingame-elo"
+        )[0].textContent = `${elo} ELO`;
         player.getElementsByClassName("ingame-elo")[0].style.display = "block";
     } else {
         player.getElementsByClassName("ingame-elo")[0].style.display = "none";

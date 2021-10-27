@@ -24,4 +24,10 @@ module.exports = {
     validatePlayer(validater) {
         return;
     },
+    generateRoomId() {
+        let result = "";
+        for (let i = 6; i > 0; --i)
+            result += Math.floor(Math.random() * 36).toString(36);
+        return result.toUpperCase();
+    },
 };

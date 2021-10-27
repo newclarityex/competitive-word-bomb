@@ -5,7 +5,8 @@
     width: 60%;
 }
 
-.gamemode, .subgamemode{
+.gamemode,
+.subgamemode {
     position: relative;
 }
 
@@ -52,10 +53,6 @@
     display: none;
 }
 
-#casual-locked {
-    display: grid;
-    opacity: 1;
-}
 #custom-locked {
     display: grid;
     opacity: 1;
@@ -101,7 +98,7 @@
 }
 
 .gamemode-button:disabled {
-    opacity: .3;
+    opacity: 0.3;
 }
 .gamemode-button:disabled:hover {
     cursor: default;
@@ -247,7 +244,7 @@
 }
 .ingame-elo {
     font-size: 28px;
-    transition: .5s;
+    transition: 0.5s;
 }
 
 .ingame-input {

@@ -5,7 +5,7 @@ const User = require("../../api/models/User");
 class Player {
     constructor(client, player, options) {
         this.client = client;
-        this.id = player._id;
+        this.id = player.id;
         this.username = player.username;
         this.lives = options.startingLives;
         this.remainingTime = options.startingTime;
@@ -35,7 +35,7 @@ class Player {
         this.remainingTime += addedTime * bonusMultiplier;
         this.remainingTime = parseInt(this.remainingTime);
         match.sendAll("endTurn", {
-            player: this._id,
+            player: this.id,
             time: this.remainingTime,
             addedTime,
             bonusMultiplier,
@@ -43,7 +43,7 @@ class Player {
         match.nextRound(false);
     }
     setElo(elo) {
-        User.findByIdAndUpdate(this.client.user._id, { elo }, (err) => {
+        User.findByIdAndUpdate(this.client.user.id, { elo }, (err) => {
             if (err) {
                 console.log(err);
             }

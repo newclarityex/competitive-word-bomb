@@ -20,7 +20,7 @@ setInterval(() => {
 var ranked;
 
 function joinQueue() {
-    ranked = true
+    ranked = true;
     sendServer("joinQueue");
     leaveQueueBtn.style.display = "block";
     switchPage("ingame");
@@ -28,7 +28,7 @@ function joinQueue() {
     playerContainer = addPlayerDiv(username, true, userData.elo);
 }
 function leaveQueue() {
-    ranked = false
+    ranked = false;
     sendServer("leaveQueue");
     switchPage("main-menu");
     setTimeout(() => {
@@ -37,10 +37,16 @@ function leaveQueue() {
     }, 500);
 }
 
+var casualBtn = document.getElementsByClassName("gamemode-button casual")[0];
+function joinCasual() {
+    sendServer("joinCasual");
+    casualBtn.disabled = true;
+}
 function leaveRoom() {
-    ranked = false
+    ranked = false;
     sendServer("leaveRoom");
     switchPage("main-menu");
+    casualBtn.disabled = true;
     setTimeout(() => {
         leaveRoomBtn.style.display = "none";
         clearPlayers();

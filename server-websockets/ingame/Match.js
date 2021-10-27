@@ -60,23 +60,26 @@ class Match {
         this.id = this.options.id;
         this.substring = "";
         this.usedWords = [];
-        this.resetDifficulty()
-        this.sendAll("matchData", {
+        this.resetDifficulty();
+        this.sendAll("matchData", this.getMatchData());
+        if (this.options.gametype == "ranked") {
+            this.startGame();
+        }
+    }
+    getMatchData() {
+        return {
             players: JSON.stringify(
-                players.map((player) => {
+                this.players.map((player) => {
                     return {
-                        id: player.data.id,
-                        username: player.data.username,
-                        elo: player.data.elo,
-                        lives: this.options.startingLives
+                        id: player.id,
+                        username: player.username,
+                        elo: player.elo,
+                        lives: this.options.startingLives,
                     };
                 })
             ),
             options: this.options,
-        });
-        if (this.options.gametype == "ranked") {
-            this.startGame();
-        }
+        };
     }
     resetDifficulty() {
         if (this.options.gametype == "ranked") {
@@ -94,13 +97,24 @@ class Match {
             sendClient(player.client, type, payload);
         }
     }
+    addPlayer(player) {
+        this.players.push(new Player(player.client, player.data, this.options));
+        this.sendAll("playerJoined", {
+            player: {
+                id: player.id,
+                username: player.username,
+                lives: this.options.startingLives,
+            },
+        });
+        sendClient(player.client, "matchData", this.getMatchData());
+    }
     playerLost(player) {
         this.sendAll("lostLife", player.id);
         this.nextRound(true);
     }
     gameOver(winner) {
         console.log("GAME OVER");
-        let payload = { winner: winner.id }
+        let payload = { winner: winner.id };
         if (this.options.gametype == "ranked") {
             payload.eloDiff = this.calculateElo();
         }
@@ -130,10 +144,10 @@ class Match {
                 player1Data.elo
             );
         }
-        let eloDiff = player1Data.elo - player1Elo
+        let eloDiff = player1Data.elo - player1Elo;
         player1.setElo(player1Elo);
         player2.setElo(player2Elo);
-        return parseInt(eloDiff)
+        return parseInt(eloDiff);
     }
     checkRemainingPlayers() {
         // If there are more than 1 remaining players, return true.
@@ -168,12 +182,13 @@ class Match {
 
         if (!repeatWord || this.consecutiveFails >= this.players.length - 1) {
             this.consecutiveFails = 0;
-            let wordFrequencyRange = this.options.difficultyRanges[this.difficulty];
+            let wordFrequencyRange =
+                this.options.difficultyRanges[this.difficulty];
             this.substring = getSubstring(wordFrequencyRange);
         } else {
-            this.consecutiveFails++
+            this.consecutiveFails++;
             this.combo = 0;
-            this.resetDifficulty()
+            this.resetDifficulty();
         }
 
         let player = this.players[this.currentPlayer];
@@ -230,7 +245,7 @@ class Match {
         let check = checkWord(this.usedWords, word, substring);
         if (!check.status) {
             this.sendAll("failedSubmit", {
-                id: client.user._id,
+                id: client.user.id,
                 reason: check.error,
             });
             return;

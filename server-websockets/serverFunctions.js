@@ -4,11 +4,13 @@ var rooms = [];
 
 const path = require("path");
 
+const Match = require(path.join(__dirname, "./ingame/Match"));
 const {
     sendClient,
     removeQueue,
     queueList,
     setStatus,
+    generateRoomId,
     validatePlayer,
 } = require(path.join(__dirname, "/globalFunctions"));
 const matchmakingFunctions = require(path.join(__dirname, "/matchmaking"));
@@ -34,6 +36,27 @@ function checkTurn(client, room) {
 }
 
 module.exports = {
+    joinCasual(client, payload) {
+        let availableRooms = rooms.filter(
+            (room) =>
+                room.players.length < 4 &&
+                room.started == false &&
+                !room.private
+        );
+        if (availableRooms.length == 0) {
+            const roomId = generateRoomId();
+            let matchOptions = {
+                gametype: "casual",
+                private: false,
+                id: roomId,
+            };
+            rooms.push(
+                new Match([{ data: client.user, client }], matchOptions)
+            );
+        } else {
+            availableRooms[0].addPlayer({ data: client.user, client });
+        }
+    },
     joinQueue(client, payload) {
         if (client.user.id.startsWith("guest")) {
             sendClient(client, "console", "Guests cannot queue matchmaking!");
@@ -44,7 +67,7 @@ module.exports = {
             queue.find(
                 (queuedPlayer) =>
                     queuedPlayer.client == client ||
-                    queuedPlayer.data._id == player._id
+                    queuedPlayer.data.id == player.id
             )
         ) {
             sendClient(
@@ -62,7 +85,7 @@ module.exports = {
             sendClient(client, "console", "Guests cannot queue matchmaking!");
             return;
         }
-        let player = removeQueue(queue, client)
+        let player = removeQueue(queue, client);
         if (player) {
             setStatus(player, "online");
         }
@@ -74,7 +97,10 @@ module.exports = {
             sendClient(client, "console", "Unable to edit word.");
             return;
         }
-        room.sendAll("editWord", { id: room.players[room.currentPlayer].id, word: payload.word });
+        room.sendAll("editWord", {
+            id: room.players[room.currentPlayer].id,
+            word: payload.word,
+        });
     },
     submitWord(client, payload) {
         let room = getRoom(payload.roomId);

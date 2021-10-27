@@ -20,12 +20,12 @@ const colors = ["#912f56", "#527a54", "#004777", "#8b912f"];
 
 class Match {
     constructor(players, options) {
-        this.players = JSON.parse(players).map(player => new Player(player));
+        this.players = players.map((player) => new Player(player));
         this.options = options;
         this.currentPlayer = 0;
     }
     startGame() {
-        substringDiv.style.backgroundColor = "#9a348e"
+        substringDiv.style.backgroundColor = "#9a348e";
         substringDiv.style.opacity = 1;
         let num = 3;
         substringDiv.textContent = num;
@@ -38,12 +38,19 @@ class Match {
             substringDiv.textContent = num;
         }, 1000);
     }
+    addPlayer(player) {
+        let playerObj = new Player(player);
+        this.players.push(playerObj);
+        playerContainer = addPlayerDiv(player.username, player.id == user_id);
+        playerObj.element = playerContainer;
+        playerObj.updateLives();
+    }
     startTurn(player, substring, time, currentPlayer) {
         if (player == user_id) {
             enableInput();
         } else {
             disableInput();
-            this.players[currentPlayer].updateWord("")
+            this.players[currentPlayer].updateWord("");
         }
 
         // Timer
@@ -77,9 +84,9 @@ class Match {
         timer.textContent = time;
     }
     removeLife(id) {
-        let player = this.players.find(player => player.id == id)
+        let player = this.players.find((player) => player.id == id);
         player.lives--;
-        player.updateLives()
+        player.updateLives();
         console.log("lives updated");
     }
     editWord(id, word) {
@@ -87,7 +94,7 @@ class Match {
             return;
         }
 
-        let player = this.players.find(player => player.id == id)
+        let player = this.players.find((player) => player.id == id);
         player.updateWord(word);
     }
     gameOver(payload) {
@@ -96,28 +103,38 @@ class Match {
         substringDiv.style.opacity = 0;
 
         if (ranked) {
-            let winner = this.players.find(player => player.id == payload.winner)
-            let loser = this.players.find(player => player.id != payload.winner)
+            let winner = this.players.find(
+                (player) => player.id == payload.winner
+            );
+            let loser = this.players.find(
+                (player) => player.id != payload.winner
+            );
 
-            loser.lives = 0
-            loser.updateLives()
+            loser.lives = 0;
+            loser.updateLives();
 
-            let winnerEloElement = winner.element.getElementsByClassName("ingame-elo")[0]
-            let loserEloElement = loser.element.getElementsByClassName("ingame-elo")[0]
+            let winnerEloElement =
+                winner.element.getElementsByClassName("ingame-elo")[0];
+            let loserEloElement =
+                loser.element.getElementsByClassName("ingame-elo")[0];
 
-            winnerEloElement.style.color = "lightgreen"
-            loserEloElement.style.color = "#ff6169"
+            winnerEloElement.style.color = "lightgreen";
+            loserEloElement.style.color = "#ff6169";
 
-            winnerEloElement.textContent = `${winner.elo + payload.eloDiff} ELO (+${payload.eloDiff})`
-            loserEloElement.textContent = `${loser.elo - payload.eloDiff} ELO (-${payload.eloDiff})`
+            winnerEloElement.textContent = `${
+                winner.elo + payload.eloDiff
+            } ELO (+${payload.eloDiff})`;
+            loserEloElement.textContent = `${
+                loser.elo - payload.eloDiff
+            } ELO (-${payload.eloDiff})`;
 
             if (winner.id == this.self.id) {
-                userData.elo = winner.elo + payload.eloDiff
+                userData.elo = winner.elo + payload.eloDiff;
             } else {
-                userData.elo = loser.elo - payload.eloDiff
+                userData.elo = loser.elo - payload.eloDiff;
             }
         }
-        
+
         leaveRoomBtn.style.display = "block";
     }
 }

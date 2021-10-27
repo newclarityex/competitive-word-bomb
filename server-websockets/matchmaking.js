@@ -2,10 +2,12 @@ const thresholdPerSecond = 100;
 
 const path = require("path");
 
-const { sendClient, queueList, removeQueue } = require(path.join(
-    __dirname,
-    "./globalFunctions"
-));
+const {
+    sendClient,
+    queueList,
+    removeQueue,
+    generateRoomId,
+} = require(path.join(__dirname, "./globalFunctions"));
 
 function generateUniquePairs(arr) {
     if (arr.length < 2) {
@@ -42,13 +44,6 @@ function generateMatches(pairs) {
         matchedPlayers.push(...pair);
     }
     return generatedMatches;
-}
-
-function generateRoomId() {
-    let result = "";
-    for (let i = 6; i > 0; --i)
-        result += Math.floor(Math.random() * 36).toString(36);
-    return result.toUpperCase();
 }
 
 const Match = require(path.join(__dirname, "./ingame/Match"));
