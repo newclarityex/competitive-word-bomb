@@ -10,4 +10,7 @@ class Player {
         let livesEle = this.element.getElementsByClassName("ingame-lives")[0]
         livesEle.textContent = "❤️".repeat(this.lives)
     }
+    updateWord(word) {
+        this.element.getElementsByClassName("opponent-word")[0].textContent = word;
+    }
 }

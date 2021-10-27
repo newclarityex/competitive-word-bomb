@@ -39,6 +39,9 @@ const clientFunctions = {
     lifeLost: (payload) => {
         match.removeLife(payload.id)
     },
+    editWord: (payload) => {
+        match.editWord(payload.id, payload.word)
+    },
     gameOver: (payload) => {
         match.gameOver(payload)
     }

@@ -74,7 +74,7 @@ module.exports = {
             sendClient(client, "console", "Unable to edit word.");
             return;
         }
-        room.sendAll("editWord", { word: payload.word });
+        room.sendAll("editWord", { id: room.players[room.currentPlayer].id, word: payload.word });
     },
     submitWord(client, payload) {
         let room = getRoom(payload.roomId);

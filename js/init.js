@@ -52,6 +52,7 @@ let inputs = document.getElementsByClassName("ingame-input");
 for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i];
     input.onkeydown = function (e) {
+        sendServer("editWord", { roomId: match.options.id, word: input.value });
         if (e.keyCode == 13) {
             submitWord(input.value);
             input.value = "";

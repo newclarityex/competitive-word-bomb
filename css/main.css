@@ -264,6 +264,9 @@
     display: grid;
     place-items: center;
 }
+.opponent-word {
+    font-size: 24px;
+}
 .leave-button {
     display: none;
     position: absolute;

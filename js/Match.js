@@ -81,6 +81,14 @@ class Match {
         player.updateLives()
         console.log("lives updated");
     }
+    editWord(id, word) {
+        if (id == this.self.id) {
+            return;
+        }
+
+        let player = this.players.find(player => player.id == id)
+        player.updateWord(word);
+    }
     gameOver(payload) {
         disableInput();
 
