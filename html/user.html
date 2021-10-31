@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Words and Nukes</title>
+    <script defer src="/login.js"></script>
+    <script defer src="/userpage.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/userProfile.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <h1 class="logo">Word Bomb</h1>
+        <div class="navbar-navlink-wrapper">
+            <a class="navlink" href="/">Play</a>
+            <a class="navlink" href="/leaderboard">Leaderboard</a>
+            <a class="navlink" href="https://discord.gg/euuHhuFRBd" target="_blank">Discord</a>
+            <a class="navlink active" href="/about">About</a>
+        </div>
+        <div class="navbar-user">
+            <button class="logout-button" onclick="logout()">Logout</button>
+            <span class="navbar-user-info">Logged in as <span class="navbar-username"></span></span>
+        </div>
+        <div class="navbar-buttons-wrapper">
+            <button class="login-button" onclick="openModal('login')">Login</button>
+            <button class="signup-button" onclick="openModal('register')">Sign Up</button>
+        </div>
+    </div>
+
+    <div class="auth-modal">
+        <div class="modal-outside" onclick="closeAuthModal()"></div>
+        <form class="modal-box login" action="/">
+            <button type="button" class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
+            <h1 class="auth-title">Log In</h1>
+            <input class="auth-input" type="text" name="username" placeholder="Username" pattern="^\S+$"
+                title="No spaces allowed." required maxlength="32">
+            <div>
+                <input class="auth-input" type="password" name="password" placeholder="Password" required minlength="8"
+                    maxlength="2048">
+                <button type="button" class="forgot-password" onclick="openModal('password-reset')">Forgot
+                    Password?</button>
+            </div>
+            <div class="modal-buttons-wrapper">
+                <button class="submit-button" onclick="submitLogin">Submit</button>
+            </div>
+        </form>
+        <form class="modal-box register">
+            <button type="button" class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
+            <h1 class="auth-title">Sign Up</h1>
+            <input class="auth-input" type="text" placeholder="Username" pattern="^\S+$" title="No spaces allowed."
+                required maxlength="32">
+            <input class="auth-input" type="email" placeholder="Email(Optional)">
+            <span class="modal-info">(For password recovery)</span>
+            <input class="auth-input" name="new-password" id="new-password" autocomplete="new-password" type="password"
+                placeholder="Password" required minlength="8" maxlength="2048">
+            <div class="modal-buttons-wrapper">
+                <button class="submit-button">Submit</button>
+            </div>
+        </form>
+        <form class="modal-box password-reset">
+            <button type="button" class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
+            <h1 class="auth-title">Reset Password</h1>
+            <input class="auth-input" type="email" placeholder="Email">
+            <div class="modal-buttons-wrapper">
+                <button class="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        ahhh
+    </div>
+</body>

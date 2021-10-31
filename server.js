@@ -77,6 +77,9 @@ const leaderboardRouter = require(path.join(
 ));
 app.use("/api", leaderboardRouter);
 
+app.get('/user/:username', function(req, res) {
+    res.sendFile(path.join(__dirname, 'html/user.html'));
+});
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
