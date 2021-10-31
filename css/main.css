@@ -5,6 +5,10 @@
     width: 60%;
 }
 
+.gamemode, .subgamemode{
+    position: relative;
+}
+
 .gamemode.casual {
     background-color: #912f56;
     border-radius: 16px;
@@ -30,7 +34,6 @@
     justify-content: space-between;
     /* color: #b8d4b9; */
     color: rgba(255, 255, 255, 0.55);
-    position: relative;
 }
 
 .gamemode-locked {
@@ -47,6 +50,19 @@
     transition: 0.5s;
     opacity: 0;
     display: none;
+}
+
+#casual-locked {
+    display: grid;
+    opacity: 1;
+}
+#custom-locked {
+    display: grid;
+    opacity: 1;
+}
+#practice-locked {
+    display: grid;
+    opacity: 1;
 }
 
 .gamemode-title {
@@ -84,6 +100,12 @@
     background-color: rgba(255, 255, 255, 0.5);
 }
 
+.gamemode-button:disabled {
+    opacity: .3;
+}
+.gamemode-button:disabled:hover {
+    cursor: default;
+}
 .subgamemodes {
     display: flex;
     flex-direction: row;
@@ -217,10 +239,15 @@
 
 .ingame-lives {
     font-size: 36px;
+    height: 50px;
 }
 
 .ingame-username {
-    font-size: 36px;
+    font-size: 44px;
+}
+.ingame-elo {
+    font-size: 28px;
+    transition: .5s;
 }
 
 .ingame-input {
@@ -237,7 +264,9 @@
     display: grid;
     place-items: center;
 }
-
+.opponent-word {
+    font-size: 24px;
+}
 .leave-button {
     display: none;
     position: absolute;
@@ -267,4 +296,5 @@
     color: white;
     font-size: 36px;
     opacity: 0;
+    transition: opacity 0.5s;
 }

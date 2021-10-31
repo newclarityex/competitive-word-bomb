@@ -16,7 +16,7 @@ const apiLimiter = rateLimit({
     max: 100,
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 const app = express();
 const expressWs = require("express-ws")(app);
 
@@ -41,6 +41,13 @@ const serverFunctions = require(path.join(
     "./server-websockets/serverFunctions"
 ));
 
+
+const userDataRouter = require(path.join(
+    __dirname,
+    "/api/routers/userData"
+));
+app.use("/api", userDataRouter);
+
 const authorizationMiddleware = require(path.join(
     __dirname,
     "/api/middleware/authorization"
@@ -56,6 +63,11 @@ app.ws("/", function (ws, req) {
             data = JSON.parse(data);
         } catch (error) {
             sendClient(ws, "console", "Invalid socket request.");
+            return
+        }
+        if (!(data.type in serverFunctions)) {
+            sendClient(ws, "console", "Invalid socket request.");
+            return
         }
         serverFunctions[data.type](ws, data.payload);
     });
@@ -64,7 +76,9 @@ app.ws("/", function (ws, req) {
     });
 });
 
+
 app.use("/api/", apiLimiter);
+
 const authenticationRouter = require(path.join(
     __dirname,
     "/api/routers/authentication"

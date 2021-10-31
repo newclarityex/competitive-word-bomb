@@ -7,7 +7,7 @@ function register(username, password, email) {
     if (email) {
         params.email = email;
     }
-    fetch("http://localhost:3000/api/register", {
+    fetch(`/api/register`, {
         method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -28,7 +28,7 @@ function register(username, password, email) {
 }
 
 function login(username, password) {
-    fetch("http://localhost:3000/api/login", {
+    fetch(`/api/login`, {
         method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -52,7 +52,7 @@ function login(username, password) {
 }
 
 function logout() {
-    fetch("http://localhost:3000/api/logout", {
+    fetch(`/api/logout`, {
         method: "post",
     }).then((res) => {
         localStorage.removeItem("username");
@@ -106,9 +106,11 @@ function submitRegister(e) {
 }
 
 // Set login status
+var userData
 var username = localStorage.getItem("username");
 var user_id = localStorage.getItem("id");
 if (username) {
+    updateUserData();
     let usernameSpan = document.getElementsByClassName("navbar-username")[0];
     usernameSpan.textContent = username;
     let userDiv = document.getElementsByClassName("navbar-user")[0];
@@ -127,8 +129,25 @@ if (username) {
     }, 1);
 
     // Disable competitive
-    document.getElementById("competitive-locked").style.display = "grid";
-    setTimeout(() => {
-        document.getElementById("competitive-locked").style.opacity = "1";
-    }, 1);
+    try {
+        document.getElementById("competitive-locked").style.display = "grid";
+        setTimeout(() => {
+            document.getElementById("competitive-locked").style.opacity = "1";
+        }, 1);
+    } catch (error) {
+    }
+}
+
+function updateUserData() {
+    fetch(`/api/user?username=${username}`).then((res) => {
+        if (res.status == 200) {
+            res.json().then((data) => {
+                userData = data
+                if (userDataReady) {
+                    userDataReady()
+                }
+            });
+            return;
+        }
+    });
 }

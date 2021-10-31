@@ -43,7 +43,7 @@ router.post("/register", (req, res) => {
         let token = jwt.sign(data, process.env.SECRET || config.secret, {
             expiresIn: 60 * 60 * 24 * 365,
         });
-        res.cookie("token", token, { maxAge: 900000, httpOnly: true });
+        res.cookie("token", token, { httpOnly: true });
         return res.status(200).send(data);
     });
 });

@@ -20,3 +20,9 @@ function switchPage(page) {
 }
 
 switchPage("main-menu");
+
+let competitiveButton = document.getElementsByClassName("gamemode-button competitive")[0]
+
+function userDataReady() {
+    competitiveButton.disabled = false;
+}
