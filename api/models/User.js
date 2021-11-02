@@ -18,11 +18,19 @@ const User = new Schema({
         type: Date,
         defualt: Date.now
     },
-    gamesWon: {
+    gamesPlayed: {
         type: Number,
         defualt: 0
     },
-    gamesLost: {
+    rankedPlayed: {
+        type: Number,
+        defualt: 0
+    },
+    rankedWon: {
+        type: Number,
+        defualt: 0
+    },
+    rankedLost: {
         type: Number,
         defualt: 0
     },
