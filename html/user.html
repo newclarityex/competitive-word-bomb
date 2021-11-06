@@ -75,7 +75,7 @@
         </form>
     </div>
     <div class="wrapper">
-        <div class="user-box">
+        <div class="user-box hidden">
             <div class="name-wrapper">
                 <img src="/oyes.png" class="rank-icon">
                 <p class="user-name">cringe username</p>
@@ -116,25 +116,30 @@
                     <div class="stat-value">
                         <p class="stat-name">Games Won</p>
                         <div class="stats-line"></div>
-                        <p class="stat-number">50</p>
+                        <p class="stat-number" id="gamesWon">50</p>
                     </div>
                     <div class="stat-value">
                         <p class="stat-name">Games Lost</p>
                         <div class="stats-line"></div>
-                        <p class="stat-number">50</p>
+                        <p class="stat-number" id="gamesLost">50</p>
                     </div>
                     <div class="stat-value">
                         <p class="stat-name">Total Games Played</p>
                         <div class="stats-line"></div>
-                        <p class="stat-number">50</p>
+                        <p class="stat-number" id="gamesPlayed">50</p>
                     </div>
                     <div class="stat-value">
                         <p class="stat-name">Win Rate</p>
                         <div class="stats-line"></div>
-                        <p class="stat-number">50%</p>
+                        <p class="stat-number" id="winRate">50%</p>
                     </div>  
                 </div>
             </div>
         </div>
     </div>
+    <template>
+        <h1>
+            user not found will add pager
+        </h1>
+    </template>
 </body>

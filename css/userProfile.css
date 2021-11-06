@@ -152,3 +152,6 @@
 .stat-number{
     font-weight: bold;
 }
+.hidden{
+    display: none;
+}
