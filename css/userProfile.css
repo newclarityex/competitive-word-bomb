@@ -108,7 +108,7 @@
     top: 0;
     left: 0;
     background-color: #B1D3B6;
-    width: 75%;
+    width: var(--progress);
     height: .3rem;
 }
 .arrow-left{
