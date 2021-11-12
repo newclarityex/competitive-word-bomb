@@ -9,7 +9,12 @@ router.get("/user", (req, res) => {
             res.sendStatus(500)
             return;
         }
-        res.status(200).json(user)
+        userJSON = user.toJSON()
+        User.find({"elo": { "$gt" :  parseInt(user.elo)}}).count(function (err, count) {
+            if (err) return handleError(err);
+            userJSON.pos = count;
+            return res.status(200).json(userJSON)
+          });
     });
 });
 module.exports = router;

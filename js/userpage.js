@@ -31,6 +31,12 @@ function userBox(data) {
         TODO when ranks get added add it */
         let joinDate = dateFormater(data.dateJoined);
 
+        if (data.rankedPlayed === 0) {
+            winrate = "N/A";
+        } else {
+            winrate = (data.rankedWon/data.rankedPlayed)*100;
+        }
+
         nameBox.innerText = data.username;
         dateArea.innerText = joinDate;
         eloArea.innerText = data.elo;
@@ -38,8 +44,7 @@ function userBox(data) {
         gameWin.innerText = data.rankedWon;
         gameLost.innerText = data.rankedLost;
         gamePlay.innerText = data.rankedPlayed;
-        winsRate.innerText = (data.rankedWon/data.rankedPlayed)*100;
-        console.log((0/0)*100)
+        winsRate.innerText = winrate;
 
         userBox.classList.remove("hidden");
     }
