@@ -152,6 +152,14 @@
 .stat-number{
     font-weight: bold;
 }
+.wrapper-404{
+    display: grid;
+    place-items: center;
+    margin-top: 100px;
+}
+.wrapper-404 h1{
+    margin: 0;
+}
 .hidden{
     display: none;
 }

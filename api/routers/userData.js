@@ -9,7 +9,11 @@ router.get("/user", (req, res) => {
             res.sendStatus(500)
             return;
         }
-        userJSON = user.toJSON()
+        if (!user){
+            res.sendStatus(404)
+            return;
+        }
+        userJSON = user.toJSON();
         User.find({"elo": { "$gt" :  parseInt(user.elo)}}).count(function (err, count) {
             if (err) return handleError(err);
             userJSON.pos = count;
