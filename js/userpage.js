@@ -2,15 +2,13 @@ var pathArray = window.location.pathname.split('/');
 var name = pathArray[2];
 var mainArea = document.getElementsByClassName("wrapper")[0];
 
-console.log(name);
-
 fetch(`/api/user?username=${name}`).then(response => {
-    if(response.ok){
+    if (response.ok) {
         response.json().then(data => userBox(data))
-    }
-    else{ 
+    } else { 
         userNotFound();
-    }});
+    }
+});
 
 function userBox(data) {
     const userBox = document.getElementsByClassName("user-box")[0];
@@ -22,7 +20,7 @@ function userBox(data) {
     const gameWin = document.getElementById("gamesWon");
     const gameLost = document.getElementById("gamesLost");
     const gamePlay = document.getElementById("gamesPlayed");
-    const winsRate = document.getElementById("winRate")
+    const winRate = document.getElementById("winRate")
     /* jesus there is going to be alot of var 
     TODO when ranks get added add it */
     let joinDate = dateFormater(data.dateJoined);
@@ -41,7 +39,7 @@ function userBox(data) {
     gameWin.innerText = data.rankedWon;
     gameLost.innerText = data.rankedLost;
     gamePlay.innerText = data.rankedPlayed;
-    winsRate.innerText = winrate;
+    winRate.innerText = winrate;
 
     userBox.classList.remove("hidden");
 }
