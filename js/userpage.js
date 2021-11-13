@@ -44,7 +44,7 @@ function userBox(data) {
     userBox.classList.remove("hidden");
 }
 function userNotFound() {
-    var temp = document.getElementsByTagName("template")[0];
+    var temp = document.getElementById("404-template");
     var clone = temp.content.firstElementChild.cloneNode(true);
 
     mainArea.appendChild(clone);
