@@ -35,6 +35,7 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "/js")));
 app.use(express.static(path.join(__dirname, "/css")));
+app.use(express.static(path.join(__dirname, "/img")));
 
 const serverFunctions = require(path.join(
     __dirname,
@@ -91,6 +92,9 @@ const leaderboardRouter = require(path.join(
 ));
 app.use("/api", leaderboardRouter);
 
+app.get('/user/:username', function(req, res) {
+    res.sendFile(path.join(__dirname, 'html/user.html'));
+});
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

@@ -16,19 +16,27 @@ const User = new Schema({
     },
     dateJoined: {
         type: Date,
-        defualt: Date.now
+        default: Date.now
     },
-    gamesWon: {
+    gamesPlayed: {
         type: Number,
-        defualt: 0
+        default: 0
     },
-    gamesLost: {
+    rankedPlayed: {
         type: Number,
-        defualt: 0
+        default: 0
+    },
+    rankedWon: {
+        type: Number,
+        default: 0
+    },
+    rankedLost: {
+        type: Number,
+        default: 0
     },
     lastSeen: {
       type: Date,
-      defualt: Date.now  
+      default: Date.now  
     },
     bio: String
 });
