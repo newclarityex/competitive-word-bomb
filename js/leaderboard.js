@@ -28,6 +28,7 @@ function rankingSlotMaker(listpos, name, elo){
     suptext.innerText = superscriptMaker(listpos + 1);
     placment.innerText = listpos + 1;
     nameTag.innerText = name;
+    nameTag.setAttribute("href",`/user/${name}`)
     eloTag.innerText = elo;
     raitinglist.appendChild(clone);
 }
