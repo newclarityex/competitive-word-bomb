@@ -7,6 +7,8 @@
     padding-top: 2%;
     border-radius: 2rem;
     margin-top: 3rem;
+    display: grid;
+    place-items: center;
 }
 .leaderboard-title {
     color: white;
@@ -67,4 +69,11 @@
     align-items: center;
     justify-self: end;
     font-size: 3rem;
+}
+.user-search{
+    width: 85%;
+}
+.user-search:focus{
+    border:none;
+    border-bottom: #123524 1px solid;
 }
