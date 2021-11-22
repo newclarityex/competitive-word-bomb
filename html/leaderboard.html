@@ -77,11 +77,14 @@
     <div class="leaderboard">
         <h1 class="leaderboard-title"> Player Leaderboard </h1>
         <input class="user-search" id="userSearch" placeholder="Tpye a Username"> 
-        <ul class="rating-list" id="rating-list">
+        <div class="search-results-wrapper">
+
+        </div>
+        <ul class="rating-list" id="rating-list"> <!-- so make this invis when input comes up -->
             <!--templates go here-->
         </ul>
     </div>
-    <template>
+    <template id="leaderboardCard">
         <li class="rating-item">
             <div class="placement-wrapper"> 
                 <span class="placement"> </span>
@@ -90,6 +93,9 @@
             </div>
             <div class="rated-elo"> </div>
         </li>
+    </template>
+    <template id="searchCard"> 
+
     </template>
 </body>
 </html>

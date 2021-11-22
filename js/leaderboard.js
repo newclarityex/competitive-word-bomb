@@ -22,7 +22,7 @@ function listMaker(data) {
 }
 function rankingSlotMaker(listpos, name, elo){
     listpos += skip;
-    var temp = document.getElementsByTagName("template")[0];
+    var temp = document.getElementById("leaderboardCard");
     var clone = temp.content.firstElementChild.cloneNode(true);
 
     var placment = clone.getElementsByClassName("placement")[0];
@@ -75,6 +75,19 @@ function classgiver(number) {
 }
 
 function onInputChange(value) {
-    //TODO fetch request and stuff
-    fetch(`/api/search?name=${value}`).then(response => response.json()).then(data => console.log(data));
+    if (value == ''){
+        console.log("empty");
+        raitinglist.setAttribute("style", "display: grid;");
+    }
+    else{
+        fetch(`/api/search?input=${value}`).then(response => response.json()).then(data => searchFormater(data));
+        raitinglist.setAttribute("style", "display: none;");
+    }
+}
+
+function searchFormater(data) {
+    if (data.length === 0){
+        console.log("nothing"); //add no results page
+    }
+    console.log(data);
 }
