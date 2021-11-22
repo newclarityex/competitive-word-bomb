@@ -1,5 +1,11 @@
 var skip = 0;
-var raitinglist = document.getElementById("rating-list")
+var raitinglist = document.getElementById("rating-list");
+var latestReq = '';
+const searchbox = document.getElementById("userSearch");
+
+searchbox.addEventListener("input", function (e) {
+    onInputChange(this.value);
+});
 
 getLeaderboard();
 
@@ -24,7 +30,7 @@ function rankingSlotMaker(listpos, name, elo){
     var eloTag = clone.getElementsByClassName("rated-elo")[0];
     var suptext = clone.getElementsByClassName("suptext")[0];
 
-    clone.classList.add(classgiver(listpos))
+    clone.classList.add(classgiver(listpos));
     suptext.innerText = superscriptMaker(listpos + 1);
     placment.innerText = listpos + 1;
     nameTag.innerText = name;
@@ -33,7 +39,7 @@ function rankingSlotMaker(listpos, name, elo){
     raitinglist.appendChild(clone);
 }
 function getLeaderboard() {
-    window.onscroll = ''
+    window.onscroll = '';
     fetch(`/api/leaderboard?skip=${skip}`).then(response => response.json()).then(data => listMaker(data));
 }
 function superscriptMaker(number){
@@ -66,4 +72,9 @@ function classgiver(number) {
     } else {
         return "nth-place"
     }
+}
+
+function onInputChange(value) {
+    //TODO fetch request and stuff
+    fetch(`/api/search?name=${value}`).then(response => response.json()).then(data => console.log(data));
 }

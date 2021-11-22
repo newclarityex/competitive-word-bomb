@@ -92,6 +92,12 @@ const leaderboardRouter = require(path.join(
 ));
 app.use("/api", leaderboardRouter);
 
+const searchRouter = require(path.join(
+    __dirname,
+    "/api/routers/search.js"
+));
+app.use("/api", searchRouter)
+
 app.get('/user/:username', function(req, res) {
     res.sendFile(path.join(__dirname, 'html/user.html'));
 });
