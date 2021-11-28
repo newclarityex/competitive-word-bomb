@@ -20,8 +20,6 @@
     list-style-type: none;
     width: 95%;
     padding: 0px;
-    margin-left: 2.5%;
-    margin-right: 2.5;
 }
 .rating-item {
     display: grid;
@@ -72,8 +70,55 @@
 }
 .user-search{
     width: 85%;
+    height: 50px;
+    font-size: 35px;
+    border-radius: 4px;
+    margin-top: 10px;
+    border:none;
+    background-color: #B1D3B6;
+    margin-bottom: 3px;
 }
 .user-search:focus{
-    border:none;
-    border-bottom: #123524 1px solid;
+    border-radius: 4px; 
+    outline: none;
+    border-bottom: 3px solid #456840;
+    margin-bottom: 0px;
+} 
+.search-results-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    gap: 5%;
+}
+.result{
+    width: 46%;
+    height: 75px;
+    border-radius: 10px;
+    background-color: thistle;
+    margin-top: 10px;
+    display: flex;
+}
+.result a{
+    font-weight: bold;
+}
+.name-wrapper{
+    padding-top: 24px;
+    padding-left: 10px;
+    width: 25%;
+}
+.rank-wrapper{
+    width: 75%;
+    justify-content: right;
+    display: flex;
+    gap: 10px;
+    padding-right: 10px;
+}
+.rank-wrapper img{
+    padding-top: 9.5px;
+    height: 56px;
+}
+.rank-wrapper p{
+    padding-top: 11px;
 }
