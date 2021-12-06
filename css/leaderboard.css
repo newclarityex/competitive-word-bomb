@@ -89,6 +89,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    margin-top: 10px;
     width: 80%;
     gap: 5%;
 }
@@ -110,15 +111,15 @@
 }
 .rank-wrapper{
     width: 75%;
-    justify-content: right;
+    justify-content: left;
     display: flex;
     gap: 10px;
-    padding-right: 10px;
+    padding-left: 10px;
 }
 .rank-wrapper img{
     padding-top: 9.5px;
     height: 56px;
 }
-.rank-wrapper p{
+.result p{
     padding-top: 11px;
 }

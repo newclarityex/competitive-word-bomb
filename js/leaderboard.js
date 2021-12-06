@@ -1,6 +1,6 @@
 var skip = 0;
 var raitinglist = document.getElementById("rating-list");
-var latestReq = '';
+var latestReq = Date.now();
 const searchbox = document.getElementById("userSearch");
 
 searchbox.addEventListener("input", function (e) {
@@ -80,14 +80,15 @@ function onInputChange(value) {
         raitinglist.setAttribute("style", "display: grid;");
     }
     else{
-        fetch(`/api/search?input=${value}`).then(response => response.json()).then(data => searchFormater(data));
+        fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
         raitinglist.setAttribute("style", "display: none;");
     }
 }
 
 function searchFormater(data) {
-    if (data.length === 0){
-        console.log("nothing"); //add no results page
+    if (data.reqTime > latestReq) {
+        if (data.users.length === 0){
+            console.log("nothing"); //add no results page
+        }
     }
-    console.log(data);
 }
