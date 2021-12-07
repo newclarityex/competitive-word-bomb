@@ -11,11 +11,6 @@ mongoose.connect(uri, { sslValidate: false });
 
 const User = require("./api/models/User");
 
-const apiLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100,
-});
-
 const port = process.env.PORT || 80;
 const app = express();
 const expressWs = require("express-ws")(app);
@@ -42,6 +37,11 @@ const serverFunctions = require(path.join(
     "./server-websockets/serverFunctions"
 ));
 
+const limiters = require(path.join(
+    __dirname,
+    "api/routers/limters"
+));
+app.use("/api", limiters);
 
 const userDataRouter = require(path.join(
     __dirname,
@@ -78,7 +78,7 @@ app.ws("/", function (ws, req) {
 });
 
 
-app.use("/api/", apiLimiter);
+
 
 const authenticationRouter = require(path.join(
     __dirname,
