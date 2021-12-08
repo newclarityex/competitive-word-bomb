@@ -75,30 +75,10 @@
         </form>
     </div>
     <div class="leaderboard">
-        <h1 class="leaderboard-title"> Player Leaderboard </h1>
-        <input class="user-search" id="userSearch" placeholder="Tpye a Username"> 
-        <div class="search-results-wrapper">
-            <div class="result">
-                <div class="rank-wrapper">
-                    <img src="/oyes.png">
-                    <a class="name-wrapper"> username </a>
-                </div>
-                <p> 1020 ELO</p>
-            </div>
-            <div class="result">
-                <div class="rank-wrapper">
-                    <img src="/oyes.png">
-                    <a class="name-wrapper"> username </a>
-                </div>
-                <p> 1020 ELO</p>
-            </div>
-            <div class="result">
-                <div class="rank-wrapper">
-                    <img src="/oyes.png">
-                    <a class="name-wrapper"> username </a>
-                </div>
-                <p> 1020 ELO</p>
-            </div>
+        <h1 class="leaderboard-title" id="leaderboardTitle"> Player Leaderboard </h1>
+        <input class="user-search" id="userSearch" placeholder="Type a Username"> 
+        <div class="search-results-wrapper" id="resultWrapper">
+            <!-- more templates go here-->
         </div>
         <ul class="rating-list" id="rating-list"> <!-- so make this invis when input comes up -->
             <!--templates go here-->
@@ -114,8 +94,24 @@
             <div class="rated-elo"> </div>
         </li>
     </template>
-    <template id="searchCard"> 
 
+    <template id="searchCard"> 
+        <div class="result">
+            <div class="rank-wrapper">
+                <img src="/oyes.png">
+                <a class="name-wrapper">  </a>
+            </div>
+            <p> </p>
+        </div>
+    </template>
+
+    <template id="noResults">
+        <div class="no-results-wrapper">
+            <img src="/ded1.png">
+            <h2>
+                No results found
+            </h2>
+        </div>
     </template>
 </body>
 </html>

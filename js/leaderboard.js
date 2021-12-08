@@ -2,6 +2,9 @@ var skip = 0;
 var raitinglist = document.getElementById("rating-list");
 var latestReq = Date.now();
 const searchbox = document.getElementById("userSearch");
+const resultCard = document.getElementById("searchCard");
+const resultZone = document.getElementById("resultWrapper");
+const title = document.getElementById("leaderboardTitle");
 
 searchbox.addEventListener("input", function (e) {
     onInputChange(this.value);
@@ -76,19 +79,38 @@ function classgiver(number) {
 
 function onInputChange(value) {
     if (value == ''){
-        console.log("empty");
+        resultZone.innerHTML = "";
         raitinglist.setAttribute("style", "display: grid;");
+        title.innerText = "Player Leaderboard";
     }
     else{
         fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
         raitinglist.setAttribute("style", "display: none;");
+        title.innerText = "Player Search";
     }
 }
 
 function searchFormater(data) {
     if (data.reqTime > latestReq) {
+        resultZone.innerHTML = "";
         if (data.users.length === 0){
             console.log("nothing"); //add no results page
+            let noResTemp = document.getElementById("noResults");
+            let clone = noResTemp.content.firstElementChild.cloneNode(true);
+            resultZone.appendChild(clone);
+        }
+        else {
+            for (let i = 0; i < data.users.length; i++) {
+                let clone = resultCard.content.firstElementChild.cloneNode(true);
+                let name = clone.getElementsByClassName("name-wrapper")[0];
+                let elo = clone.getElementsByTagName("p")[0];
+
+                name.innerText = data.users[i].username;
+                name.setAttribute("href", `/user/${data.users[i].username}`)
+                elo.innerText = `${data.users[i].elo} ELO`;
+
+                resultZone.appendChild(clone);
+            }
         }
     }
 }

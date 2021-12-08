@@ -105,9 +105,11 @@
     font-weight: bold;
 }
 .name-wrapper{
-    padding-top: 24px;
+    color: black;
+    padding-top: 25px;
     padding-left: 10px;
     width: 25%;
+    text-decoration: none;
 }
 .rank-wrapper{
     width: 75%;
@@ -122,4 +124,12 @@
 }
 .result p{
     padding-top: 11px;
+}
+.no-results-wrapper{
+    display: grid;
+    place-items: center;
+    margin-top: 25px;
+}
+.no-results-wrapper h2{
+    margin: 0;
 }
