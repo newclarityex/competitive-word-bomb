@@ -10,8 +10,8 @@ router.get("/search", (req, res) => {
             res.sendStatus(500)
             return;
         }
-        returnObj = {users, reqTime}
-        res.status(200).json(returnObj)
+        chogPampOwONyaNya = {users, reqTime}
+        res.status(200).json(chogPampOwONyaNya)
     });
 });
 module.exports = router;
