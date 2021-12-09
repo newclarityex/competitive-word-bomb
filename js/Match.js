@@ -47,8 +47,10 @@ class Match {
     }
     startTurn(player, substring, time, currentPlayer) {
         if (player == user_id) {
+            console.log("YOUR TURN");
             enableInput();
         } else {
+            console.log("NOT YOUR TURN");
             disableInput();
             this.players[currentPlayer].updateWord("");
         }
@@ -90,11 +92,12 @@ class Match {
         console.log("lives updated");
     }
     editWord(id, word) {
-        if (id == this.self.id) {
+        if (id == user_id) {
             return;
         }
 
         let player = this.players.find((player) => player.id == id);
+        console.log(player);
         player.updateWord(word);
     }
     gameOver(payload) {

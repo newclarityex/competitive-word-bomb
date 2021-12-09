@@ -57,7 +57,10 @@ function createRooms(matches, rooms, queue) {
                 private: true,
                 id: roomId,
             };
-            rooms.push(new Match(match, matchOptions));
+            let newRoom = new Match(match, matchOptions);
+            rooms.push(newRoom);
+            match[0].client.room = newRoom;
+            match[1].client.room = newRoom;
             removeQueue(queue, match[0].client);
             removeQueue(queue, match[1].client);
         }

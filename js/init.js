@@ -41,7 +41,14 @@ var casualBtn = document.getElementsByClassName("gamemode-button casual")[0];
 function joinCasual() {
     sendServer("joinCasual");
     casualBtn.disabled = true;
+    substringDiv.textContent = "Start";
+    substringDiv.style.display = "grid";
+    substringDiv.style.opacity = 1;
+    substringDiv.onclick = () => {
+        sendServer("startCasual");
+    };
 }
+
 function leaveRoom() {
     ranked = false;
     sendServer("leaveRoom");

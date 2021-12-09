@@ -50,11 +50,15 @@ module.exports = {
                 private: false,
                 id: roomId,
             };
-            rooms.push(
-                new Match([{ data: client.user, client }], matchOptions)
+            let newRoom = new Match(
+                [{ data: client.user, client }],
+                matchOptions
             );
+            rooms.push(newRoom);
+            client.room = newRoom;
         } else {
             availableRooms[0].addPlayer({ data: client.user, client });
+            client.room = availableRooms[0];
         }
     },
     joinQueue(client, payload) {
@@ -92,7 +96,7 @@ module.exports = {
         sendClient(client, "console", "Leave queue." + queueList(queue));
     },
     editWord(client, payload) {
-        let room = getRoom(payload.roomId);
+        let room = client.room;
         if (!checkTurn(client, room)) {
             sendClient(client, "console", "Unable to edit word.");
             return;
@@ -103,7 +107,7 @@ module.exports = {
         });
     },
     submitWord(client, payload) {
-        let room = getRoom(payload.roomId);
+        let room = client.room;
         let check = checkTurn(client, room);
         if (!check.status) {
             sendClient(
@@ -114,6 +118,10 @@ module.exports = {
             return;
         }
         room.submitWord(client, payload.word, room.substring);
+    },
+    startCasual(client, payload) {
+        let room = client.room;
+        room.startGame();
     },
     disconnect(client) {
         let player = removeQueue(queue, client);
