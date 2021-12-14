@@ -71,15 +71,17 @@
 .user-search{
     width: 85%;
     height: 50px;
-    font-size: 35px;
-    border-radius: 4px;
+    font-size: 28px;
+    border-radius: 10px;
     margin-top: 10px;
+    padding: 5px;
+    padding-left: 10px;
     border:none;
     background-color: #B1D3B6;
     margin-bottom: 3px;
 }
 .user-search:focus{
-    border-radius: 4px; 
+    border-radius: 10px; 
     outline: none;
     border-bottom: 3px solid #456840;
     margin-bottom: 0px;
