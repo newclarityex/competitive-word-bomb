@@ -5,7 +5,6 @@ const searchbox = document.getElementById("userSearch");
 const resultCard = document.getElementById("searchCard");
 const resultZone = document.getElementById("resultWrapper");
 const title = document.getElementById("leaderboardTitle");
-
 searchbox.addEventListener("input", function (e) {
     onInputChange(this.value);
 });
@@ -82,11 +81,17 @@ function onInputChange(value) {
         resultZone.innerHTML = "";
         raitinglist.setAttribute("style", "display: grid;");
         title.innerText = "Player Leaderboard";
+        title.setAttribute("class", "leaderboard-title");
+        searchbox.setAttribute("class", "user-search");
+        resultZone.setAttribute("class", "search-results-wrapper");
+        
     }
     else{
         fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
         raitinglist.setAttribute("style", "display: none;");
-        title.innerText = "Player Search";
+        title.setAttribute("class", "hidden-title");
+        searchbox.setAttribute("class", "user-search-slide-up");
+        resultZone.setAttribute("class", "search-results-wrapper slide-up");
     }
 }
 
