@@ -79,6 +79,7 @@ function classgiver(number) {
 function onInputChange(value) {
     if (value == ''){
         resultZone.innerHTML = "";
+        latestReq = Date.now();
         raitinglist.setAttribute("style", "display: grid;");
         title.innerText = "Player Leaderboard";
         title.setAttribute("class", "leaderboard-title");
