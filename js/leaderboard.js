@@ -1,8 +1,8 @@
 var skip = 0;
-var raitinglist = document.getElementById("rating-list");
 var latestReq = Date.now();
 const searchbox = document.getElementById("userSearch");
 const resultCard = document.getElementById("searchCard");
+const raitinglist = document.getElementById("rating-list");
 const resultZone = document.getElementById("resultWrapper");
 const title = document.getElementById("leaderboardTitle");
 searchbox.addEventListener("input", function (e) {
@@ -85,14 +85,16 @@ function onInputChange(value) {
         title.setAttribute("class", "leaderboard-title");
         searchbox.setAttribute("class", "user-search");
         resultZone.setAttribute("class", "search-results-wrapper");
+        searchbox.setAttribute("class", "user-search-slide-down");
+        raitinglist.setAttribute("class", "rating-list");
         
     }
     else{
         fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
-        raitinglist.setAttribute("style", "display: none;");
         title.setAttribute("class", "hidden-title");
         searchbox.setAttribute("class", "user-search-slide-up");
         resultZone.setAttribute("class", "search-results-wrapper slide-up");
+        raitinglist.setAttribute("class", "rating-list-hidden");
     }
 }
 
