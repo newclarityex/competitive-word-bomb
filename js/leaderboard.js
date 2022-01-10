@@ -83,16 +83,14 @@ function onInputChange(value) {
         raitinglist.setAttribute("style", "display: grid;");
         title.innerText = "Player Leaderboard";
         title.setAttribute("class", "leaderboard-title");
-        searchbox.setAttribute("class", "user-search");
+        searchbox.setAttribute("class", "user-search user-search-slide-down");
         resultZone.setAttribute("class", "search-results-wrapper");
-        resultZone.setAttribute("style", "");
-        searchbox.setAttribute("class", "user-search-slide-down");
         raitinglist.setAttribute("class", "rating-list");
         
     }
     else{
         fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
-        setTimeout(() => {resultZone.setAttribute("class","search-results-wrapper slide-up ")}, 400);
+        setTimeout(() => {resultZone.setAttribute("class","search-results-wrapper slide-up")}, 400);
         title.setAttribute("class", "hidden-title");
         searchbox.setAttribute("class", "user-search-slide-up");
         raitinglist.setAttribute("class", "rating-list-hidden");

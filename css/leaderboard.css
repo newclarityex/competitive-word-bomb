@@ -135,7 +135,8 @@
     transition: .4s ease-out;
 }
 .search-results-wrapper{
-    display: none;
+    display: flex;
+    margin-bottom: -100%;
     opacity: 0;
     flex-wrap: wrap;
     align-items: center;
@@ -143,12 +144,12 @@
     width: 80%;
     gap: 5%;
     margin-top: 10px;
+    transition: transform 2s ease-out, opacity 2s ease-out;
 }
 .slide-up{
     opacity: 1;
-    display: flex;
+    margin-bottom: 30px;
     transform: translateY(-100px);
-    transition: transform 2s ease-out, opacity 2s ease-out;
 }
 .result{
     width: 46%;
