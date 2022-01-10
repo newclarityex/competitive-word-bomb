@@ -85,15 +85,16 @@ function onInputChange(value) {
         title.setAttribute("class", "leaderboard-title");
         searchbox.setAttribute("class", "user-search");
         resultZone.setAttribute("class", "search-results-wrapper");
+        resultZone.setAttribute("style", "");
         searchbox.setAttribute("class", "user-search-slide-down");
         raitinglist.setAttribute("class", "rating-list");
         
     }
     else{
         fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
+        setTimeout(() => {resultZone.setAttribute("class","search-results-wrapper slide-up ")}, 400);
         title.setAttribute("class", "hidden-title");
         searchbox.setAttribute("class", "user-search-slide-up");
-        resultZone.setAttribute("class", "search-results-wrapper slide-up");
         raitinglist.setAttribute("class", "rating-list-hidden");
     }
 }

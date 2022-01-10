@@ -135,7 +135,8 @@
     transition: .4s ease-out;
 }
 .search-results-wrapper{
-    display: flex;
+    display: none;
+    opacity: 0;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
@@ -144,8 +145,10 @@
     margin-top: 10px;
 }
 .slide-up{
+    opacity: 1;
+    display: flex;
     transform: translateY(-100px);
-    transition: .4s .4s ease-out;
+    transition: transform 2s ease-out, opacity 2s ease-out;
 }
 .result{
     width: 46%;
