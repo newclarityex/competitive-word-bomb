@@ -16,13 +16,13 @@ function listMaker(data) {
         rankingSlotMaker(i, data[i].username, data[i].elo);
     }
     skip += data.length;
-    window.onscroll = function() {
+    window.onscroll = function () {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             getLeaderboard();
         }
     };
 }
-function rankingSlotMaker(listpos, name, elo){
+function rankingSlotMaker(listpos, name, elo) {
     listpos += skip;
     var temp = document.getElementById("leaderboardCard");
     var clone = temp.content.firstElementChild.cloneNode(true);
@@ -36,7 +36,7 @@ function rankingSlotMaker(listpos, name, elo){
     suptext.innerText = superscriptMaker(listpos + 1);
     placment.innerText = listpos + 1;
     nameTag.innerText = name;
-    nameTag.setAttribute("href",`/user/${name}`)
+    nameTag.setAttribute("href", `/user/${name}`)
     eloTag.innerText = elo;
     raitinglist.appendChild(clone);
 }
@@ -44,7 +44,7 @@ function getLeaderboard() {
     window.onscroll = '';
     fetch(`/api/leaderboard?skip=${skip}`).then(response => response.json()).then(data => listMaker(data));
 }
-function superscriptMaker(number){
+function superscriptMaker(number) {
     if ((number % 100) - number % 10 === 10) {
         return "th";
     }
@@ -66,7 +66,7 @@ function classgiver(number) {
     if (number === 1) {
         return "first-place";
     }
-    else if(number === 2){
+    else if (number === 2) {
         return "second-place";
     }
     else if (number === 3) {
@@ -77,8 +77,7 @@ function classgiver(number) {
 }
 
 function onInputChange(value) {
-    if (value == ''){
-        resultZone.innerHTML = "";
+    if (value == '') {
         latestReq = Date.now();
         raitinglist.setAttribute("style", "display: grid;");
         title.innerText = "Player Leaderboard";
@@ -86,11 +85,12 @@ function onInputChange(value) {
         searchbox.setAttribute("class", "user-search user-search-slide-down");
         resultZone.setAttribute("class", "search-results-wrapper");
         raitinglist.setAttribute("class", "rating-list");
-        
+
     }
-    else{
+    else {
         fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
-        setTimeout(() => {resultZone.setAttribute("class","search-results-wrapper slide-up")}, 400);
+        // setTimeout(() => {  },0);
+        resultZone.setAttribute("class", "search-results-wrapper slide-up")
         title.setAttribute("class", "hidden-title");
         searchbox.setAttribute("class", "user-search-slide-up");
         raitinglist.setAttribute("class", "rating-list-hidden");
@@ -100,7 +100,7 @@ function onInputChange(value) {
 function searchFormater(data) {
     if (data.reqTime > latestReq) {
         resultZone.innerHTML = "";
-        if (data.users.length === 0){
+        if (data.users.length === 0) {
             console.log("nothing"); //add no results page
             let noResTemp = document.getElementById("noResults");
             let clone = noResTemp.content.firstElementChild.cloneNode(true);
