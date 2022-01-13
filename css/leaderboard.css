@@ -7,9 +7,11 @@
     padding-top: 2%;
     border-radius: 2rem;
     margin-top: 3rem;
+    margin-bottom: 10px;
     display: grid;
     place-items: center;
     position: relative;
+    transition: height .4s linear;
 }
 .hidden-title{
     color: white;
@@ -119,7 +121,7 @@
     background-color: #B1D3B6;
     margin-bottom: 0px;
     transform: translateY(-100px);
-    transition: .4s ease-out;
+    transition: .4s .4s ease-out;
 }
 .user-search-slide-down{
     width: 85%;
@@ -150,6 +152,7 @@
 .slide-up{
     opacity: 1;
     transform: translateY(-100px);
+    transition: transform .4s .4s ease-out, opacity .4s .4s ease-out;
 }
 .result{
     width: 46%;

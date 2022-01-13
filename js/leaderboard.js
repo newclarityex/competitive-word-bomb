@@ -5,6 +5,8 @@ const resultCard = document.getElementById("searchCard");
 const raitinglist = document.getElementById("rating-list");
 const resultZone = document.getElementById("resultWrapper");
 const title = document.getElementById("leaderboardTitle");
+const background = document.getElementById("leaderboard");
+let backgroundHeight = 0;
 searchbox.addEventListener("input", function (e) {
     onInputChange(this.value);
 });
@@ -21,6 +23,8 @@ function listMaker(data) {
             getLeaderboard();
         }
     };
+    backgroundHeight = background.offsetHeight;
+    background.style.height = `${backgroundHeight}px`;
 }
 function rankingSlotMaker(listpos, name, elo) {
     listpos += skip;
@@ -43,6 +47,7 @@ function rankingSlotMaker(listpos, name, elo) {
 function getLeaderboard() {
     window.onscroll = '';
     fetch(`/api/leaderboard?skip=${skip}`).then(response => response.json()).then(data => listMaker(data));
+
 }
 function superscriptMaker(number) {
     if ((number % 100) - number % 10 === 10) {
@@ -80,20 +85,16 @@ function onInputChange(value) {
     if (value == '') {
         latestReq = Date.now();
         raitinglist.setAttribute("style", "display: grid;");
-        title.innerText = "Player Leaderboard";
         title.setAttribute("class", "leaderboard-title");
         searchbox.setAttribute("class", "user-search user-search-slide-down");
         resultZone.setAttribute("class", "search-results-wrapper");
+        resultZone.innerHTML = "";
         raitinglist.setAttribute("class", "rating-list");
+        background.style.height = `${backgroundHeight}px`;
 
     }
     else {
         fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
-        // setTimeout(() => {  },0);
-        resultZone.setAttribute("class", "search-results-wrapper slide-up")
-        title.setAttribute("class", "hidden-title");
-        searchbox.setAttribute("class", "user-search-slide-up");
-        raitinglist.setAttribute("class", "rating-list-hidden");
     }
 }
 
@@ -119,5 +120,11 @@ function searchFormater(data) {
                 resultZone.appendChild(clone);
             }
         }
+        let resultsHeight = resultZone.offsetHeight;
+        resultZone.classList = "search-results-wrapper slide-up";
+        title.classList = "hidden-title";
+        searchbox.classList = "user-search-slide-up";
+        raitinglist.classList = "rating-list-hidden";
+        background.style.height = `${resultsHeight + 80}px`;
     }
 }
