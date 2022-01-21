@@ -86,12 +86,12 @@ function onInputChange(value) {
     if (value == '') {
         latestReq = Date.now();
         title.style = '';
-        raitinglist.setAttribute("style", "display: grid;");
-        title.setAttribute("class", "leaderboard-title");
-        searchbox.setAttribute("class", "user-search user-search-slide-down");
-        resultZone.setAttribute("class", "search-results-wrapper");
+        raitinglist.style = "display: grid;"
+        raitinglist.classList = "rating-list"
+        title.classList = "leaderboard-title"
+        searchbox.classList = "user-search user-search-slide-down";
+        resultZone.classList = "search-results-wrapper";
         resultZone.innerHTML = "";
-        raitinglist.setAttribute("class", "rating-list");
         jank.style.height = `${background.offsetHeight}px`;
 
     }
