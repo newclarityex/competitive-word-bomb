@@ -6,6 +6,7 @@ const raitinglist = document.getElementById("rating-list");
 const resultZone = document.getElementById("resultWrapper");
 const title = document.getElementById("leaderboardTitle");
 const background = document.getElementById("leaderboard");
+const jank = document.getElementById("jank");
 let backgroundHeight = 0;
 searchbox.addEventListener("input", function (e) {
     onInputChange(this.value);
@@ -24,7 +25,7 @@ function listMaker(data) {
         }
     };
     backgroundHeight = background.offsetHeight;
-    background.style.height = `${backgroundHeight}px`;
+    jank.style.height = `${backgroundHeight}px`;
 }
 function rankingSlotMaker(listpos, name, elo) {
     listpos += skip;
@@ -84,13 +85,14 @@ function classgiver(number) {
 function onInputChange(value) {
     if (value == '') {
         latestReq = Date.now();
+        title.style = '';
         raitinglist.setAttribute("style", "display: grid;");
         title.setAttribute("class", "leaderboard-title");
         searchbox.setAttribute("class", "user-search user-search-slide-down");
         resultZone.setAttribute("class", "search-results-wrapper");
         resultZone.innerHTML = "";
         raitinglist.setAttribute("class", "rating-list");
-        background.style.height = `${backgroundHeight}px`;
+        jank.style.height = `${background.offsetHeight}px`;
 
     }
     else {
@@ -121,10 +123,11 @@ function searchFormater(data) {
             }
         }
         let resultsHeight = resultZone.offsetHeight;
+        setTimeout(() => {title.style = "white-space: nowrap;"}, 400);
         resultZone.classList = "search-results-wrapper slide-up";
-        title.classList = "hidden-title";
-        searchbox.classList = "user-search-slide-up";
+        title.classList = "hidden-title leaderboard-title";
+        searchbox.classList = "user-search-slide-up user-search";
         raitinglist.classList = "rating-list-hidden";
-        background.style.height = `${resultsHeight + 80}px`;
+        jank.style.height = `${resultsHeight + 140}px`;
     }
 }
