@@ -8,6 +8,7 @@ const title = document.getElementById("leaderboardTitle");
 const background = document.getElementById("leaderboard");
 const jank = document.getElementById("jank");
 let backgroundHeight = 0;
+let inSearch = false;
 searchbox.addEventListener("input", function (e) {
     onInputChange(this.value);
 });
@@ -24,9 +25,11 @@ function listMaker(data) {
             getLeaderboard();
         }
     };
-    backgroundHeight = background.offsetHeight;
-    jank.style.height = `${backgroundHeight}px`;
-}
+    if (!inSearch) {
+        backgroundHeight = background.offsetHeight;
+        jank.style.height = `${backgroundHeight}px`;
+    };
+};
 function rankingSlotMaker(listpos, name, elo) {
     listpos += skip;
     var temp = document.getElementById("leaderboardCard");
@@ -92,8 +95,9 @@ function onInputChange(value) {
         searchbox.classList = "user-search user-search-slide-down";
         resultZone.classList = "search-results-wrapper";
         resultZone.innerHTML = "";
+        background.style.height = '';
         jank.style.height = `${background.offsetHeight}px`;
-
+        inSearch = false;
     }
     else {
         fetch(`/api/search?input=${value}&reqTime=${Date.now()}`).then(response => response.json()).then(data => searchFormater(data));
@@ -128,6 +132,9 @@ function searchFormater(data) {
         title.classList = "hidden-title leaderboard-title";
         searchbox.classList = "user-search-slide-up user-search";
         raitinglist.classList = "rating-list-hidden";
+        raitinglist.style.height = "0px";
+        raitinglist.style.overflow = "hidden";
         jank.style.height = `${resultsHeight + 140}px`;
+        inSearch = true;
     }
 }
