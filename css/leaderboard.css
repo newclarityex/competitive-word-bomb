@@ -21,7 +21,7 @@
     top: 0;
     left: 0;
     z-index: -1;
-    transition: height .4s ease-out;
+    transition: height .5s ease-out;
 }
 .leaderboard-title{
     color: white;
@@ -30,7 +30,7 @@
     margin: 0;
     visibility: visible;
     opacity: 1;
-    transition: opacity .4s ease;
+    transition: opacity .4s .4s ease;
     z-index: 1;
 }
 .hidden-title{
@@ -42,7 +42,7 @@
     width: 95%;
     padding: 0px;
     opacity: 1;
-    transition: opacity .25s ease;
+    transition: opacity .25s .25s ease-out;
     z-index: 1;
     margin-top: 10px;
 }
