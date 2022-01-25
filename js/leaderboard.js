@@ -134,6 +134,7 @@ function searchFormater(data) {
         raitinglist.classList = "rating-list-hidden";
         raitinglist.style.height = "0px";
         raitinglist.style.overflow = "hidden";
+        jank.style.transition = `height ${Math.log(jank.offsetHeight - resultsHeight)/10}s ease-out`;
         jank.style.height = `${resultsHeight + 140}px`;
         inSearch = true;
     }

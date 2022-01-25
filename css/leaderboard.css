@@ -21,7 +21,6 @@
     top: 0;
     left: 0;
     z-index: -1;
-    transition: height .5s ease-out;
 }
 .leaderboard-title{
     color: white;
