@@ -126,6 +126,7 @@ function searchFormater(data) {
                 resultZone.appendChild(clone);
             }
         }
+        //Hell is real and this code is proof of it
         let resultsHeight = resultZone.offsetHeight;
         setTimeout(() => {title.style = "white-space: nowrap;"}, 400);
         resultZone.classList = "search-results-wrapper slide-up";
