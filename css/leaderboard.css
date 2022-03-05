@@ -7,20 +7,14 @@
     border-radius: 2rem;
     margin-top: 3rem;
     margin-bottom: 10px;
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
     position: relative;
     transition: height .4s linear;
-}
-.jank{
-    border-radius: 2rem;
-    height: 10px;
-    width: 100%;
-    background: #527a54;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
+    background-color: #527a54;
+    overflow: hidden;
 }
 .leaderboard-title{
     color: white;
@@ -146,7 +140,7 @@
     height: 75px;
     border-radius: 10px;
     background-color: thistle;
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
 }
 .result a{

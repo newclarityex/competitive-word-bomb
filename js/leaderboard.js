@@ -96,7 +96,7 @@ function onInputChange(value) {
         resultZone.classList = "search-results-wrapper";
         resultZone.innerHTML = "";
         background.style.height = '';
-        jank.style.height = `${background.offsetHeight}px`;
+        jank.style.height = "100%";
         inSearch = false;
     }
     else {
@@ -135,8 +135,7 @@ function searchFormater(data) {
         raitinglist.classList = "rating-list-hidden";
         raitinglist.style.height = "0px";
         raitinglist.style.overflow = "hidden";
-        jank.style.transition = `height ${Math.log(jank.offsetHeight - resultsHeight)/10}s ease-out`;
-        jank.style.height = `${resultsHeight + 140}px`;
+        background.style.height = `${resultsHeight + 80}px`;
         inSearch = true;
     }
 }
