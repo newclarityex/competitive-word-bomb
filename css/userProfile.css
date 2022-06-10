@@ -106,10 +106,9 @@
 .position-progress{
     position: absolute;
     top: 0;
-    left: 0;
     background-color: #B1D3B6;
     width: var(--progress);
-    height: .3rem;
+    height: .2rem;
 }
 .arrow-left{
     margin-top: 1.1rem;
